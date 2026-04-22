@@ -107,7 +107,7 @@
       "inputs": {
         "caelestia-cli": "caelestia-cli_2",
         "nixpkgs": [
-          "nixpkgs_unstable"
+          "nixpkgs-unstable"
         ],
         "quickshell": "quickshell_2"
       },
@@ -131,7 +131,7 @@
         "home-manager": "home-manager",
         "jovian": "jovian",
         "nixpkgs": [
-          "nixpkgs_unstable"
+          "nixpkgs-unstable"
         ],
         "rust-overlay": "rust-overlay"
       },
@@ -314,7 +314,7 @@
         "hyprwayland-scanner": "hyprwayland-scanner",
         "hyprwire": "hyprwire",
         "nixpkgs": [
-          "nixpkgs_unstable"
+          "nixpkgs-unstable"
         ],
         "pre-commit-hooks": "pre-commit-hooks",
         "systems": "systems",
@@ -748,6 +748,21 @@
         "type": "github"
       }
     },
+    "nixpkgs-unstable": {
+      "locked": {
+        "lastModified": 1776548001,
+        "narHash": "sha256-ZSK0NL4a1BwVbbTBoSnWgbJy9HeZFXLYQizjb2DPF24=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "b12141ef619e0a9c1c84dc8c684040326f27cdcc",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixos-unstable",
+        "type": "indirect"
+      }
+    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1776221942,
@@ -760,21 +775,6 @@
       "original": {
         "id": "nixpkgs",
         "ref": "nixos-25.11",
-        "type": "indirect"
-      }
-    },
-    "nixpkgs_unstable": {
-      "locked": {
-        "lastModified": 1776169885,
-        "narHash": "sha256-l/iNYDZ4bGOAFQY2q8y5OAfBBtrDAaPuRQqWaFHVRXM=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "4bd9165a9165d7b5e33ae57f3eecbcb28fb231c9",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "ref": "nixos-unstable",
         "type": "indirect"
       }
     },
@@ -853,7 +853,7 @@
         "hyprland": "hyprland",
         "musnix": "musnix",
         "nixpkgs": "nixpkgs_2",
-        "nixpkgs_unstable": "nixpkgs_unstable",
+        "nixpkgs-unstable": "nixpkgs-unstable",
         "xdg-portal-hyprland": "xdg-portal-hyprland"
       }
     },
@@ -915,7 +915,7 @@
         "hyprutils": "hyprutils_2",
         "hyprwayland-scanner": "hyprwayland-scanner_2",
         "nixpkgs": [
-          "nixpkgs_unstable"
+          "nixpkgs-unstable"
         ],
         "systems": "systems_2"
       },

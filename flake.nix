@@ -3,7 +3,7 @@
 
   inputs = {
     # Nix PKGS
-    nixpkgs_unstable.url = "nixpkgs/nixos-unstable";
+    nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
     nixpkgs.url = "nixpkgs/nixos-25.11";
 
     musnix  = { url = "github:musnix/musnix"; };
@@ -17,17 +17,17 @@
     # Hyprland
     hyprland = {
       url = "github:hyprwm/Hyprland";
-      inputs.nixpkgs.follows = "nixpkgs_unstable";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     xdg-portal-hyprland = {
       url = "github:hyprwm/xdg-desktop-portal-hyprland";
-      inputs.nixpkgs.follows = "nixpkgs_unstable";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     # Caelestia
     caelestia-shell = {
       url = "github:caelestia-dots/shell";
-      inputs.nixpkgs.follows = "nixpkgs_unstable";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     caelestia-cli = {
       url = "github:caelestia-dots/cli";
@@ -37,11 +37,11 @@
     # Chaotic
     chaotic = {
       url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
-      inputs.nixpkgs.follows = "nixpkgs_unstable";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, hyprland, xdg-portal-hyprland, caelestia-shell, chaotic, ... } @ inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, hyprland, xdg-portal-hyprland, caelestia-shell, chaotic, ... } @ inputs:
     let
       lib = nixpkgs.lib;
       system = "x86_64-linux";
@@ -64,7 +64,12 @@
      homeConfigurations = {
        wilko = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          extraSpecialArgs = { inherit inputs hyprland xdg-portal-hyprland; } ;
+          extraSpecialArgs = {
+            inherit inputs hyprland xdg-portal-hyprland; 
+            pkgs-unstable = import nixpkgs-unstable {
+              inherit system;
+            };
+          };
           modules = [
             ./home/home.nix
             ./pkgs/appimages/default.nix

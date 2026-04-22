@@ -2,14 +2,14 @@
 {
   programs.caelestia = {
     enable = true;
-    
+
     settings = {
       services = {
         useFahrenheit = false;
         useFahrenheitPerformance = false;
         useTwelveHourClock = false;
       };
- 
+
       border = {
         rounding = 15;
       };
@@ -22,7 +22,6 @@
 
         visualiser = {
           enabled = true;
-          autohide = true;
         };
       };
 
