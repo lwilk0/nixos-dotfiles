@@ -1,5 +1,4 @@
-{ config, lib, ... }:
-{
+{...}: {
   wayland.windowManager.hyprland.settings = {
     # Syntax: monitor=name,resolution,position,scale
     monitor = [

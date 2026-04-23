@@ -1,5 +1,8 @@
-{ config, lib, inputs, pkgs, ... }:
 {
+  inputs,
+  pkgs,
+  ...
+}: {
   imports = [
     ./settings.nix
     ./binds.nix

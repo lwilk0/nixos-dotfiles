@@ -1,8 +1,4 @@
-{
-  config,
-  lib,
-  ...
-}: {
+{...}: {
   wayland.windowManager.hyprland.settings = {
     windowrule = [
       # ══════════════════════════════════════════════════════════════════════════
@@ -63,7 +59,7 @@
       # KITTY — TERMINAL TRANSPARENCY
       # ══════════════════════════════════════════════════════════════════════════
 
-      "opacity 0.90 override 0.85 override, match:class ^(kitty)$"
+      "opacity 0.90 override 0.9o override, match:class ^(kitty)$"
 
       # ══════════════════════════════════════════════════════════════════════════
       # AUDIO APPS — NO IDLE INHIBIT

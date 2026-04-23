@@ -1,38 +1,36 @@
-{ config, lib, pkgs, ... }:
-let
-  mod        = "SUPER";
-  modShift   = "SUPER SHIFT";
+{lib, ...}: let
+  mod = "SUPER";
+  modShift = "SUPER SHIFT";
   modControl = "SUPER CTRL";
-  modAlt     = "SUPER ALT";
 
-  terminal     = "kitty";
-  fileManager  = "kitty -- yazi-themed";
-  browser      = "brave";
-  launcher     = "caelestia shell drawers toggle launcher";
-  screenshot   = "grimblast";
+  terminal = "kitty";
+  fileManager = "kitty -- yazi-themed";
+  browser = "brave";
+  launcher = "caelestia shell drawers toggle launcher";
+  screenshot = "grimblast";
 
   # Generate workspace switch + move binds for 1-9, with 0 → workspace 10.
   # This avoids repeating the same line 20 times.
-  wsRange = builtins.genList (n: n + 1) 9;  # [ 1 2 3 4 5 6 7 8 9 ]
+  wsRange = builtins.genList (n: n + 1) 9; # [ 1 2 3 4 5 6 7 8 9 ]
 
   # Key label: workspace 10 maps to the "0" key.
   wsKey = ws: toString (lib.mod ws 10);
 
-  wsSwitchBinds = map (ws: "${mod}, ${wsKey ws}, workspace, ${toString ws}") wsRange
-    ++ [ "${mod}, 0, workspace, 10" ];
+  wsSwitchBinds =
+    map (ws: "${mod}, ${wsKey ws}, workspace, ${toString ws}") wsRange
+    ++ ["${mod}, 0, workspace, 10"];
 
-  wsMoveBinds = map (ws: "${modShift}, ${wsKey ws}, movetoworkspace, ${toString ws}") wsRange
-    ++ [ "${modShift}, 0, movetoworkspace, 10" ];
-in
-{
+  wsMoveBinds =
+    map (ws: "${modShift}, ${wsKey ws}, movetoworkspace, ${toString ws}") wsRange
+    ++ ["${modShift}, 0, movetoworkspace, 10"];
+in {
   wayland.windowManager.hyprland.settings = {
-
     # ── Regular binds (fire on press) ──────────────────────────────────────────
     bind =
       # ── Launch ───────────────────────────────────────────────────────────────
       [
         "${mod}, Return,  exec, ${terminal}"
-        "${mod}, space,   exec, caelestia shell drawers toggle launcher"
+        "${mod}, space,   exec, ${launcher}"
         "${mod}, W,       exec, ${browser}"
         "${mod}, E,       exec, ${fileManager}"
         "${mod}, B,       exec, blueman-manager"
@@ -102,7 +100,7 @@ in
         # SUPER+SHIFT+A → Built-in Analog (headphones on aux, for guitar monitoring)
         "${mod},      A, exec, wpctl set-default $(wpctl status | awk '/AirPods Pro/{print $2}' | tr -d '.')"
         "${modShift}, A, exec, wpctl set-default $(wpctl status | awk '/Built-in Audio Analog/{print $2}' | tr -d '.' | head -1)"
-        
+
         "${mod},      G, exec, $HOME/.dotfiles/scripts/guitar.sh"
         "${modShift}, G, exec, $HOME/.dotfiles/scripts/unguitar.sh"
       ]

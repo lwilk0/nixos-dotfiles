@@ -1,5 +1,4 @@
-{ config, ... }:
-{
+{...}: {
   wayland.windowManager.hyprland.settings = {
     env = [
       # ── Wayland / desktop identification ────────────────────────────────────

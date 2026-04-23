@@ -1,8 +1,4 @@
-{
-  config,
-  lib,
-  ...
-}: {
+{...}: {
   wayland.windowManager.hyprland.settings = {
     # ── General ────────────────────────────────────────────────────────────────
     general = {
@@ -11,7 +7,7 @@
       border_size = 2;
       "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
       "col.inactive_border" = "rgba(595959aa)";
-      resize_on_border = true; # grab window edges to resize — no keybind needed
+      resize_on_border = false;
       allow_tearing = false; # per-window tearing is controlled via windowrulev2 "immediate"
       layout = "dwindle";
     };
@@ -22,8 +18,8 @@
 
       blur = {
         enabled = true;
-        size = 6;
-        passes = 3;
+        size = 7;
+        passes = 4;
         new_optimizations = true;
         xray = false; # don't blur through layered surfaces (e.g. bars)
         ignore_opacity = false;
@@ -38,7 +34,7 @@
 
       # Slightly dim inactive windows so focus is always obvious
       dim_inactive = true;
-      dim_strength = 0.05;
+      dim_strength = 0.02;
     };
 
     # ── Animations ─────────────────────────────────────────────────────────────
