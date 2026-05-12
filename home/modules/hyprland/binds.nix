@@ -5,7 +5,11 @@
 
   terminal = "kitty";
   fileManager = "kitty -- yazi-themed";
+<<<<<<< HEAD
   browser = "brave";
+=======
+  browser = "librewolf-perf";
+>>>>>>> fd57431 (Fix Librewolf)
   launcher = "caelestia shell drawers toggle launcher";
   screenshot = "grimblast";
 
