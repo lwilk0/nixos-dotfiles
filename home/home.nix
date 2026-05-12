@@ -5,7 +5,7 @@
   ...
 }: let
   caelestia-cli = inputs.caelestia-cli.packages."x86_64-linux".default;
-
+  hydra = pkgs.callPackage /home/wilko/.local/pkgs/appimages/default.nix {};
   yazi-themed = pkgs.writeShellScriptBin "yazi-themed" ''
     cat ~/.local/state/caelestia/sequences.txt 2> /dev/null
     exec ${pkgs.yazi}/bin/yazi "$@"
@@ -22,6 +22,7 @@ in {
     ./modules/portal
     ./modules/wireplumber
     ./modules/qt
+    ./modules/librewolf-perf
   ];
 
   nixpkgs.config.allowUnfree = true;

@@ -778,6 +778,18 @@
         "type": "indirect"
       }
     },
+    "pkgs-local": {
+      "locked": {
+        "lastModified": 1778583733,
+        "narHash": "sha256-qiiU/fDYlznDDIE2iBQ9ww8lg6Jn7GqYqwJlLkogHgg=",
+        "path": "/home/wilko/.local/pkgs",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/wilko/.local/pkgs",
+        "type": "path"
+      }
+    },
     "pre-commit-hooks": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -854,6 +866,7 @@
         "musnix": "musnix",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
+        "pkgs-local": "pkgs-local",
         "xdg-portal-hyprland": "xdg-portal-hyprland"
       }
     },

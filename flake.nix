@@ -6,6 +6,8 @@
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
     nixpkgs.url = "nixpkgs/nixos-25.11";
 
+    pkgs-local.url = "path:/home/wilko/.local/pkgs";
+
     musnix  = { url = "github:musnix/musnix"; };
 
     # Home Manager
@@ -72,8 +74,8 @@
           };
           modules = [
             ./home/home.nix
-            ./pkgs/appimages/default.nix
-            ./pkgs/deb/default.nix
+	    inputs.pkgs-local.homeManagerModules.appimages 
+            inputs.pkgs-local.homeManagerModules.deb
             caelestia-shell.homeManagerModules.default
           ];
        };
