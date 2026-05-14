@@ -36,7 +36,6 @@ in {
       # ── Core desktop ──────────────────────────────────────────────────────────
       yazi-themed
       brave
-      mullvad-vpn
       qbittorrent
       caelestia-cli
       btop
@@ -48,8 +47,10 @@ in {
       xdg-utils
       gnome-keyring
       fastfetch
+      gnome-keyring
       blueman
 
+      librewolf
       # ── Utilities ────────────────────────────────────────────────────────────
       playerctl # MPRIS media control — used by Hyprland media keybinds
       wl-clipboard # wl-copy / wl-paste — essential for Wayland clipboard
@@ -59,12 +60,13 @@ in {
       ripgrep
       fd
       lazygit
+      dxvk
 
       # ── GPG ──────────────────────────────────────────────────────────────────
       gpgme
 
       # ── Wine / gaming ────────────────────────────────────────────────────────
-      wineWow64Packages.staging # 64+32-bit Wine with staging patches
+      wineWowPackages.wayland # 64+32-bit Wine with staging patches
       winetricks
 
       # ── Neovim ───────────────────────────────────────────────────────────────

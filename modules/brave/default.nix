@@ -1,5 +1,4 @@
-{ config, pkgs, ... }:
-{
+{...}: {
   environment.etc."brave/policies/managed/policies.json".text = builtins.toJSON {
     BraveRewardsDisabled = true;
     BraveWalletDisabled = true;
@@ -23,6 +22,6 @@
     BrowserSignin = 0;
     BuiltInDnsClientEnabled = false;
     SpellcheckEnabled = true;
-    SpellcheckLanguage = [ "en-GB" ];
-  };   
+    SpellcheckLanguage = ["en-GB"];
+  };
 }

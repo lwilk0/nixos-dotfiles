@@ -1,10 +1,11 @@
-{ config, ... }:
-{
+{config, ...}: {
   imports = [
     ./steam
     ./brave
-    ./mullvad
+    ./keyring
     ./bitwig
     ./gnupg
+    ./protonvpn
+    ./virtualbox
   ];
 }

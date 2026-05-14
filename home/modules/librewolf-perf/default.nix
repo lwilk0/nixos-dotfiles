@@ -2,7 +2,6 @@
   home.packages = with pkgs; [
     (writeShellScriptBin "librewolf-perf" ''
       exec ${util-linux}/bin/taskset -c 0-11 ${librewolf}/bin/librewolf \
-        --new-instance \
         --setpref='media.ffmpeg.vaapi.enabled:true' \
         --setpref='layers.acceleration.force-enabled:true' \
         --setpref='webgl.force-enabled:true' \

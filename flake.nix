@@ -8,7 +8,7 @@
 
     pkgs-local.url = "path:/home/wilko/.local/pkgs";
 
-    musnix  = { url = "github:musnix/musnix"; };
+    musnix = {url = "github:musnix/musnix";};
 
     # Home Manager
     home-manager = {
@@ -43,42 +43,51 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, hyprland, xdg-portal-hyprland, caelestia-shell, chaotic, ... } @ inputs:
-    let
-      lib = nixpkgs.lib;
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
-    in {
-      nixosConfigurations = {
-        nixos = lib.nixosSystem {
-          inherit system;
-          modules = [
-            ./system/pc
-            ./modules
-            inputs.musnix.nixosModules.musnix
-            chaotic.nixosModules.default
-            { programs.appimage.binfmt = true; }
-          ];
-          specialArgs = { inherit inputs; };
-        };
+  outputs = {
+    self,
+    nixpkgs,
+    nixpkgs-unstable,
+    home-manager,
+    hyprland,
+    xdg-portal-hyprland,
+    caelestia-shell,
+    chaotic,
+    ...
+  } @ inputs: let
+    lib = nixpkgs.lib;
+    system = "x86_64-linux";
+    pkgs = nixpkgs.legacyPackages.${system};
+  in {
+    nixosConfigurations = {
+      nixos = lib.nixosSystem {
+        inherit system;
+        modules = [
+          ./system/pc
+          ./modules
+          inputs.musnix.nixosModules.musnix
+          chaotic.nixosModules.default
+          {programs.appimage.binfmt = true;}
+        ];
+        specialArgs = {inherit inputs;};
       };
+    };
 
-     homeConfigurations = {
-       wilko = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          extraSpecialArgs = {
-            inherit inputs hyprland xdg-portal-hyprland; 
-            pkgs-unstable = import nixpkgs-unstable {
-              inherit system;
-            };
+    homeConfigurations = {
+      wilko = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        extraSpecialArgs = {
+          inherit inputs hyprland xdg-portal-hyprland;
+          pkgs-unstable = import nixpkgs-unstable {
+            inherit system;
           };
-          modules = [
-            ./home/home.nix
-	    inputs.pkgs-local.homeManagerModules.appimages 
-            inputs.pkgs-local.homeManagerModules.deb
-            caelestia-shell.homeManagerModules.default
-          ];
-       };
-     };
-   };
+        };
+        modules = [
+          ./home/home.nix
+          inputs.pkgs-local.homeManagerModules.appimages
+          inputs.pkgs-local.homeManagerModules.deb
+          caelestia-shell.homeManagerModules.default
+        ];
+      };
+    };
+  };
 }

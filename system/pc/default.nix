@@ -1,5 +1,4 @@
-{ config, inputs, ... }:
-{
+{...}: {
   imports = [
     ./bluetooth.nix
     ./user.nix

@@ -77,6 +77,14 @@
       "float on, match:class ^(qbittorrent)$, match:title ^(Add New Torrent).*"
       "float on, match:class ^(qbittorrent)$, match:title ^(Options)$"
       "suppress_event maximize, match:class ^(dev.zed.Zed|zeditor)$"
+      
+      "float on, match:class ^(yabridge-host.exe.so)$"
+      "pin on, match:class ^(yabridge-host.exe.so)$"
+      "no_focus on, match:class ^(yabridge-host.exe.so)$"
+
+      "immediate on, match:title ^(Soldano SLO-100 X \\(GUI\\))$"
+      "pin on, match:class ^(Soldano SLO-100 X \\(GUI\\))$"
+      "float on, match:class ^(Soldano SLO-100 X \\(GUI\\))$"
     ];
   };
 }

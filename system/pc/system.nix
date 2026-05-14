@@ -1,31 +1,39 @@
-{ config, lib, pkgs, ... }:
 {
+  lib,
+  pkgs,
+  ...
+}: {
   system.stateVersion = "25.11";
   nix.settings = {
-    experimental-features = [ "nix-command" "flakes" ];
+    experimental-features = ["nix-command" "flakes"];
 
     # The i5-14600K has 20 threads (6 P-cores + 8 E-cores × 2).
     # max-jobs  = how many derivations to build in parallel
     # cores = 0 = give every build job all available threads
     max-jobs = "auto";
-    cores    = 0;
+    cores = 0;
 
     # Advertise x86-64-v3 capability so Nix substitutes AVX2/BMI2/FMA-optimised
     # binaries from caches that offer them (e.g. Chaotic-nyx).
     # The i5-14600K satisfies every x86-64-v3 instruction requirement.
     system-features = [
-      "nixos-test" "benchmark" "big-parallel" "kvm"
+      "nixos-test"
+      "benchmark"
+      "big-parallel"
+      "kvm"
       "gccarch-x86-64-v3"
     ];
   };
 
   boot.kernelPackages = pkgs.linuxPackages_cachyos-lto;
   boot.kernelParams = [
-    "mitigations=auto"    # keep some mitigations; change to off if you accept the risks
+    "mitigations=auto" # keep some mitigations; change to off if you accept the risks
     "swapaccount=1"
-    # elevator= intentionally omitted — schedulers are set per-device via udev below
-    # zswap intentionally omitted — zram already provides RAM-backed compressed swap;
-    # enabling zswap on top adds a redundant compression layer with no benefit
+    "btusb.enable_autosuspend=0"
+    "bluetooth.disable_ertm=1"
+    "intel_iommu=on" # For Intel CPUs
+    "iommu=pt" # Passthrough mode
+    "pcie_aspm=off" # Disable PCIe power saving
   ];
 
   # ── Per-device I/O scheduler ─────────────────────────────────────────────────
@@ -50,7 +58,7 @@
 
   environment.systemPackages = with pkgs; [
     linux-firmware
-    intel-media-driver   # iGPU (i915) VAAPI — Quick Sync video decode
+    intel-media-driver # iGPU (i915) VAAPI — Quick Sync video decode
     mesa
     libva
     libvpx
@@ -59,8 +67,8 @@
   # ── GPU ──────────────────────────────────────────────────────────────────────
   # xserver is disabled; videoDrivers here would be a no-op, so it is omitted.
   hardware.graphics = {
-    enable      = true;
-    enable32Bit = true;   # required for Steam, Wine, and 32-bit Vulkan/OpenGL
+    enable = true;
+    enable32Bit = true; # required for Steam, Wine, and 32-bit Vulkan/OpenGL
 
     # ROCm CLR exposes OpenCL on the RX 9060 XT (Navi 44 / RDNA4).
     # Unlocks GPU-accelerated compute in Blender, Stable Diffusion, etc.
@@ -71,7 +79,7 @@
 
   boot.kernelModules = [
     "amdgpu"
-    "i915"   # keep for Intel Quick Sync hardware video decode
+    "i915" # keep for Intel Quick Sync hardware video decode
   ];
 
   # si_support / cik_support are only relevant for pre-GCN / GCN-1 cards (2012–2013).
@@ -84,8 +92,8 @@
   #   dirty_bytes          ~512 MiB  — start background writeback at this point
   #   dirty_background_bytes~128 MiB — hard cap before processes are throttled
   boot.kernel.sysctl = {
-    "vm.dirty_bytes"            = 536870912;   # 512 MiB
-    "vm.dirty_background_bytes" = 134217728;   # 128 MiB
+    "vm.dirty_bytes" = 536870912; # 512 MiB
+    "vm.dirty_background_bytes" = 134217728; # 128 MiB
 
     # With 32 GB RAM, keep more directory/inode metadata cached instead of
     # evicting it in favour of page-cache pressure.
@@ -98,37 +106,37 @@
   #   commit=60 — flush the ext4 journal every 60 s instead of the default 5 s,
   #               reducing write amplification on the NVMe at the cost of a larger
   #               potential dirty window (acceptable since we have zram, not swap)
-  fileSystems."/".options = lib.mkForce [ "noatime" "commit=60" ];
+  fileSystems."/".options = lib.mkForce ["noatime" "commit=60"];
 
   # ── /tmp on tmpfs ─────────────────────────────────────────────────────────────
   fileSystems."/tmp" = {
-    device  = "tmpfs";
-    fsType  = "tmpfs";
-    options = [ "mode=1777" "size=20%" ];
+    device = "tmpfs";
+    fsType = "tmpfs";
+    options = ["mode=1777" "size=20%"];
   };
 
   # ── Swap / zram ───────────────────────────────────────────────────────────────
   # No physical swap; zram provides RAM-backed compressed swap.
   # zswap is NOT enabled — it would add a second compression stage on top of zram,
   # wasting CPU cycles with zero benefit.
-  swapDevices = [ ];
+  swapDevices = [];
   zramSwap = {
-    enable        = true;
-    priority      = 100;
-    algorithm     = "lz4";
+    enable = true;
+    priority = 100;
+    algorithm = "lz4";
     memoryPercent = 50;
   };
 
   # ── Nix housekeeping ─────────────────────────────────────────────────────────
   nix.gc = {
     automatic = true;
-    dates     = "weekly";
-    options   = "--max-free 2G";
+    dates = "weekly";
+    options = "--max-free 2G";
   };
 
-  services.fstrim.enable   = true;
+  services.fstrim.enable = true;
   services.printing.enable = false;
-  services.openssh.enable  = false;
+  services.openssh.enable = false;
 
   programs.dconf.enable = true;
 }

@@ -130,5 +130,25 @@ in {
       "${mod}, mouse:272, movewindow"
       "${mod}, mouse:273, resizewindow"
     ];
+
+    extraConfig = ''
+      # ==========================================
+      # MINI KEYBOARD STATE MACHINE
+      # No submaps! Main keyboard is never blocked.
+      # ==========================================
+
+      # Knob Press changes the mode
+      bind = , XF86Launch8, exec, $HOME/.dotfiles/scripts/minikb.sh switch
+
+      # --- W A S D Buttons ---
+      bind = , XF86Tools,  exec, $HOME/.dotfiles/scripts/minikb.sh w      # W
+      bind = , XF86Launch5, exec, $HOME/.dotfiles/scripts/minikb.sh a      # A
+      bind = , XF86Launch6, exec, $HOME/.dotfiles/scripts/minikb.sh s      # S
+      bind = , XF86Launch7, exec, $HOME/.dotfiles/scripts/minikb.sh d      # D
+
+      # --- Knob Up / Down ---
+      bind = , XF86Launch9, exec, $HOME/.dotfiles/scripts/minikb.sh up     # Knob Up
+      bind = , F19,         exec, $HOME/.dotfiles/scripts/minikb.sh down   # Knob Down
+    '';
   };
 }

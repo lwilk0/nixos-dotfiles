@@ -7,7 +7,7 @@
     settings = {
       General = {
         Experimental = true;
-        ControllerMode = "dual";
+        ControllerMode = "bredr";
         FastConnectable = "true";
         Enable = "Source,Sink,Media,Socket";
       };
@@ -34,4 +34,6 @@
       };
     };
   };
+
+  security.rtkit.enable = true;
 }
