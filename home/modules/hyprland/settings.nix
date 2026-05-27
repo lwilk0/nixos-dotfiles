@@ -79,7 +79,7 @@
 
     # ── Dwindle layout ─────────────────────────────────────────────────────────
     dwindle = {
-      pseudotile = true; # SUPER+P toggles pseudo-tiling
+      #pseudotile = true; # SUPER+P toggles pseudo-tiling
       preserve_split = true; # split direction is remembered per-node
       smart_split = false;
     };

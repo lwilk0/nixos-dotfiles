@@ -59,7 +59,7 @@
       # KITTY — TERMINAL TRANSPARENCY
       # ══════════════════════════════════════════════════════════════════════════
 
-      "opacity 0.90 override 0.9o override, match:class ^(kitty)$"
+      "opacity 0.90 override 0.90 override, match:class ^(kitty)$"
 
       # ══════════════════════════════════════════════════════════════════════════
       # AUDIO APPS — NO IDLE INHIBIT
@@ -77,7 +77,7 @@
       "float on, match:class ^(qbittorrent)$, match:title ^(Add New Torrent).*"
       "float on, match:class ^(qbittorrent)$, match:title ^(Options)$"
       "suppress_event maximize, match:class ^(dev.zed.Zed|zeditor)$"
-      
+
       "float on, match:class ^(yabridge-host.exe.so)$"
       "pin on, match:class ^(yabridge-host.exe.so)$"
       "no_focus on, match:class ^(yabridge-host.exe.so)$"

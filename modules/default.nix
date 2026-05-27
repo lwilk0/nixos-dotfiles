@@ -7,5 +7,6 @@
     ./gnupg
     ./protonvpn
     ./virtualbox
+    ./k3b
   ];
 }

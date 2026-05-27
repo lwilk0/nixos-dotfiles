@@ -5,45 +5,20 @@
     alsa.support32Bit = true;
     pulse.enable = true;
     jack.enable = false;
-
     wireplumber.enable = true;
 
-    wireplumber = {
-      extraConfig."92-low-latency" = {
-        "monitor.alsa.rules" = [
-          {
-            matches = [{"device.name" = "~alsa_card.*";}];
-            actions = {
-              update-props = {
-                "api.alsa.period-size" = 512;
-                "api.alsa.period-num" = 2;
-                "node.latency" = "512/48000";
-              };
-            };
-          }
-        ];
-      };
+    # Remove the invalid "51-disable-headset-profile" configPackages injection.
+    # Profile control is now handled cleanly via bluetooth.nix roles.
 
-      configPackages = [
-        (pkgs.writeTextDir "share/wireplumber/wireplumber.conf.d/51-disable-headset-profile.conf" ''
-           wireplumber.profiles = {
-             main = {
-               monitor.alsa.properties = {
-                # Disable the HSP/HFP (Telephony Duplex) profile
-                device.profiles = "a2dp-sink"
-              };
-            };
-          };
-        '')
-      ];
-    };
-
-    extraConfig.pipewire."92-low-latency" = {
+    # INCREASE quantum for Bluetooth stability.
+    # 1024 is a safe value for Bluetooth A2DP.
+    # You can lower it (e.g. 512) for USB devices, but keep it high for BT.
+    extraConfig.pipewire."92-custom-buffer" = {
       context.properties = {
         default.clock.rate = 48000;
-        default.clock.quantum = 256;
-        default.clock.min-quantum = 128;
-        default.clock.max-quantum = 512;
+        default.clock.quantum = 1024;
+        default.clock.min-quantum = 512;
+        default.clock.max-quantum = 2048;
       };
     };
   };

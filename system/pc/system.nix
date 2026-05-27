@@ -26,6 +26,7 @@
   };
 
   boot.kernelPackages = pkgs.linuxPackages_cachyos-lto;
+  #boot.kernelPackages = pkgs.linuxPackages_6_18;
   boot.kernelParams = [
     "mitigations=auto" # keep some mitigations; change to off if you accept the risks
     "swapaccount=1"
@@ -62,6 +63,8 @@
     mesa
     libva
     libvpx
+    vulkan-tools
+    dxvk
   ];
 
   # ── GPU ──────────────────────────────────────────────────────────────────────
@@ -139,4 +142,30 @@
   services.openssh.enable = false;
 
   programs.dconf.enable = true;
+
+  security.pam.loginLimits = [
+    {
+      domain = "wilko"; # Apply to all users (or replace with your username)
+      type = "soft"; # Soft limit
+      item = "nofile";
+      value = "1048576";
+    }
+    {
+      domain = "wilko";
+      type = "hard"; # Hard limit (-Hn)
+      item = "nofile";
+      value = "1048576";
+    }
+  ];
+
+  systemd.settings.Manager = {
+    DefaultLimitNOFILE = "1048576";
+  };
+
+  environment.etc."systemd/user.conf.d/99-limits.conf".text = ''
+    [Manager]
+    DefaultLimitNOFILE=1048576
+  '';
+
+  systemd.services.nix-daemon.serviceConfig.LimitNOFILE = 1048576;
 }

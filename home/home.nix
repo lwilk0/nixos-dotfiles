@@ -49,8 +49,24 @@ in {
       fastfetch
       gnome-keyring
       blueman
-
       librewolf
+      samba
+      nicotine-plus
+      unzip
+      libburn
+      libisofs
+      cdrtools
+      gst_all_1.gst-plugins-good
+      gst_all_1.gst-plugins-bad
+      gst_all_1.gst-plugins-ugly
+      gst_all_1.gst-plugins-base
+      gst_all_1.gstreamer
+      protonup-qt
+
+      noto-fonts
+      noto-fonts-cjk-sans
+      noto-fonts-cjk-serif
+
       # ── Utilities ────────────────────────────────────────────────────────────
       playerctl # MPRIS media control — used by Hyprland media keybinds
       wl-clipboard # wl-copy / wl-paste — essential for Wayland clipboard
@@ -61,6 +77,7 @@ in {
       fd
       lazygit
       dxvk
+      cabextract
 
       # ── GPG ──────────────────────────────────────────────────────────────────
       gpgme
@@ -81,6 +98,7 @@ in {
       yabridge
       yabridgectl
       pipewire.jack
+      pulseaudio
 
       # LV2 plugin bundle — merged into a single profile path so Carla / Bitwig
       # find everything under $HOME/.nix-profile/lib/lv2 without extra config.
@@ -111,6 +129,7 @@ in {
     ]
     ++ [
       pkgs-unstable.rustc
+      pkgs-unstable.lutris-unwrapped
     ];
 
   # ── direnv — automatic nix dev-shell loading ──────────────────────────────
