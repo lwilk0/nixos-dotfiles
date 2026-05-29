@@ -31,7 +31,7 @@
     "mitigations=auto" # keep some mitigations; change to off if you accept the risks
     "swapaccount=1"
     "btusb.enable_autosuspend=0"
-    "bluetooth.disable_ertm=1"
+    # "bluetooth.disable_ertm=1"
     "intel_iommu=on" # For Intel CPUs
     "iommu=pt" # Passthrough mode
     "pcie_aspm=off" # Disable PCIe power saving
