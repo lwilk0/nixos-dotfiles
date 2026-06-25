@@ -8,5 +8,6 @@
     ./protonvpn
     ./virtualbox
     ./k3b
+    ./nix-ld
   ];
 }

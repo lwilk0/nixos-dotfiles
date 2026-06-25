@@ -1,106 +1,106 @@
 {...}: {
-  xdg.configFile."hypr/scheme/default.conf".text = ''
-    # Aesthetic Night remapped to Caelestia tokens
-    $background = 061115
-    $onBackground = d9d7d6
+  xdg.configFile."hypr/scheme/default.lua".text = ''
 
-    $surface = 061115
-    $surfaceDim = 061115
-    $surfaceBright = 131e22
-    $surfaceContainerLowest = 000a0e
-    $surfaceContainerLow = 0d181c
-    $surfaceContainer = 131e22
-    $surfaceContainerHigh = 1c252c
-    $surfaceContainerHighest = 484e5b
+        background = "rgb(061115)"
+        onBackground = "rgb(d9d7d6)"
 
-    $onSurface = d9d7d6
-    $surfaceVariant = 484e5b
-    $onSurfaceVariant = d9d7d6
+    background = "rgb(061115)"
+    onBackground = "rgb(d9d7d6)"
 
-    $primary = 6791c9
-    $onPrimary = d9d7d6
-    $primaryContainer = 6791c9
-    $onPrimaryContainer = 061115
+    surface = "rgb(061115)"
+    surfaceDim = "rgb(061115)"
+    surfaceBright = "rgb(061115)"
+    surfaceContainerLowest = "rgb(061115)"
+    surfaceContainerLow = "rgb(061115)"
+    surfaceContainer = "rgb(061115)"
+    surfaceContainerHigh = "rgb(061115)"
+    surfaceContainerHighest = "rgb(061115)"
 
-    $secondary = 67afc1
-    $onSecondary = d9d7d6
-    $secondaryContainer = 67afc1
-    $onSecondaryContainer = 061115
+    onSurface = "rgb(d9d7d6)"
+    surfaceVariant = "rgb(d9d7d6)"
+    onSurfaceVariant = "rgb(d9d7d6)"
 
-    $tertiary = bc83e3
-    $onTertiary = d9d7d6
-    $tertiaryContainer = bc83e3
-    $onTertiaryContainer = 061115
+    primary = "rgb(061115)"
+    onPrimary = "rgb(d9d7d6)"
+    primaryContainer = "rgb(061115)"
+    onPrimaryContainer = "rgb(d9d7d6)"
 
-    $error = df5b61
-    $onError = d9d7d6
-    $errorContainer = df5b61
-    $onErrorContainer = 061115
+    secondary = "rgb(061115)"
+    onSecondary = "rgb(d9d7d6)"
+    secondaryContainer = "rgb(061115)"
+    onSecondaryContainer = "rgb(d9d7d6)"
 
-    # Catppuccin-style aliases used in various places
-    $rosewater = e5e5e5
-    $flamingo = d9d7d6
-    $pink = c488ec
-    $mauve = bc83e3
-    $red = df5b61
-    $maroon = 8cd7aa
-    $peach = de8f78
-    $yellow = e9967e
-    $green = 78b892
-    $teal = 67afc1
-    $sky = 79aaeb
-    $sapphire = 6791c9
-    $blue = 6791c9
-    $lavender = 79aaeb
+    tertiary = "rgb(061115)"
+    onTertiary = "rgb(d9d7d6)"
+    tertiaryContainer = "rgb(061115)"
+    onTertiaryContainer = "rgb(d9d7d6)"
 
-    # Text shorthand
-    $text = d9d7d6
-    $subtext0 = 484e5b
-    $subtext1 = d9d7d6
-    $overlay0 = 595860
-    $overlay1 = 6b6972
-    $overlay2 = 7e7c86
-    $surface0 = 25252a
-    $surface1 = 37373d
-    $surface2 = 48474e
-    $base = 061115
-    $mantle = 061115
-    $crust = 000a0e
+    error = "rgb(061115)"
+    onError = "rgb(d9d7d6)"
+    errorContainer = "rgb(061115)"
+    onErrorContainer = "rgb(d9d7d6)"
 
-    # Terminal palette (matches Caelestia’s $term0..$term15 usage)
-    $term0  = 1c252c
-    $term1  = df5b61
-    $term2  = 78b892
-    $term3  = de8f78
-    $term4  = 6791c9
-    $term5  = bc83e3
-    $term6  = 67afc1
-    $term7  = d9d7d6
+    rosewater = "rgb(d9d7d6)"
+    flamingo = "rgb(d9d7d6)"
+    pink = "rgb(061115)"
+    mauve = "rgb(061115)"
+    red = "rgb(061115)"
+    maroon = "rgb(061115)"
+    peach = "rgb(061115)"
+    yellow = "rgb(061115)"
+    green = "rgb(061115)"
+    teal = "rgb(061115)"
+    sky = "rgb(061115)"
+    sapphire = "rgb(061115)"
+    blue = "rgb(061115)"
+    lavender = "rgb(061115)"
 
-    $term8  = 484e5b
-    $term9  = f16269
-    $term10 = 8cd7aa
-    $term11 = e9967e
-    $term12 = 79aaeb
-    $term13 = c488ec
-    $term14 = 7acfe4
-    $term15 = e5e5e5
+    text = "rgb(d9d7d6)"
+    subtext0 = "rgb(d9d7d6)"
+    subtext1 = "rgb(d9d7d6)"
+    overlay0 = "rgb(d9d7d6)"
+    overlay1 = "rgb(d9d7d6)"
+    overlay2 = "rgb(d9d7d6)"
+    surface0 = "rgb(061115)"
+    surface1 = "rgb(061115)"
+    surface2 = "rgb(061115)"
+    base = "rgb(061115)"
+    mantle = "rgb(061115)"
+    crust = "rgb(061115)"
 
-    # Extras (from upstream defaults; keep if you don’t override them elsewhere)
-    $inverseSurface = e5e1e7
-    $inverseOnSurface = 313034
-    $outline = 918f9a
-    $outlineVariant = 47464f
-    $shadow = 000000
-    $scrim = 000000
-    $surfaceTint = 6791c9
+    term0 = "rgb(061115)"
+    term1 = "rgb(061115)"
+    term2 = "rgb(061115)"
+    term3 = "rgb(061115)"
+    term4 = "rgb(061115)"
+    term5 = "rgb(061115)"
+    term6 = "rgb(061115)"
+    term7 = "rgb(d9d7d6)"
 
-    $success = B5CCBA
-    $onSuccess = 213528
-    $successContainer = 374B3E
-    $onSuccessContainer = D1E9D6
+    term8 = "rgb(061115)"
+    term9 = "rgb(061115)"
+    term10 = "rgb(061115)"
+    term11 = "rgb(061115)"
+    term12 = "rgb(061115)"
+    term13 = "rgb(061115)"
+    term14 = "rgb(061115)"
+    term15 = "rgb(d9d7d6)"
+
+    inverseSurface = "rgb(d9d7d6)"
+    inverseOnSurface = "rgb(061115)"
+    outline = "rgb(061115)"
+    outlineVariant = "rgb(061115)"
+    shadow = "rgb(061115)"
+    scrim = "rgb(061115)"
+    surfaceTint = "rgb(061115)"
+
+    success = "rgb(061115)"
+    onSuccess = "rgb(d9d7d6)"
+    successContainer = "rgb(061115)"
+    onSuccessContainer = "rgb(d9d7d6)"
   '';
 
+  # Caelestia files stay as normal Nix managed strings
   xdg.configFile."caelestia/cli.json".text = builtins.toJSON {
     theme = {
       enableTerm = true;
@@ -118,7 +118,6 @@
       enableZed = true;
       enableCava = true;
     };
-    # add other sections (toggles, etc.) if you use them, or omit them entirely
   };
 
   xdg.configFile."caelestia/templates/foot-aesthetic-night.ini".text = ''

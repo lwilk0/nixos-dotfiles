@@ -1,154 +1,113 @@
-{lib, ...}: let
-  mod = "SUPER";
-  modShift = "SUPER SHIFT";
-  modControl = "SUPER CTRL";
+{lib, ...}: {
+  xdg.configFile."hypr/binds.lua".text = ''
 
-  terminal = "kitty";
-  fileManager = "kitty -- yazi-themed";
-  browser = "librewolf-perf";
-  launcher = "caelestia shell drawers toggle launcher";
-  screenshot = "grimblast";
 
-  # Generate workspace switch + move binds for 1-9, with 0 → workspace 10.
-  # This avoids repeating the same line 20 times.
-  wsRange = builtins.genList (n: n + 1) 9; # [ 1 2 3 4 5 6 7 8 9 ]
+    local mod = "SUPER"
+    local modShift = "SUPER + SHIFT"
+    local modControl = "SUPER + CTRL"
 
-  # Key label: workspace 10 maps to the "0" key.
-  wsKey = ws: toString (lib.mod ws 10);
+    local terminal = "kitty"
+    local fileManager = "kitty -- yazi-themed"
+    local browser = "librewolf-perf"
+    local launcher = "caelestia shell drawers toggle launcher"
+    local screenshot = "grimblast"
 
-  wsSwitchBinds =
-    map (ws: "${mod}, ${wsKey ws}, workspace, ${toString ws}") wsRange
-    ++ ["${mod}, 0, workspace, 10"];
+      -- ── Regular binds (fire on press) ──────────────────────────────────────────
 
-  wsMoveBinds =
-    map (ws: "${modShift}, ${wsKey ws}, movetoworkspace, ${toString ws}") wsRange
-    ++ ["${modShift}, 0, movetoworkspace, 10"];
-in {
-  wayland.windowManager.hyprland.settings = {
-    # ── Regular binds (fire on press) ──────────────────────────────────────────
-    bind =
-      # ── Launch ───────────────────────────────────────────────────────────────
-      [
-        "${mod}, Return,  exec, ${terminal}"
-        "${mod}, space,   exec, ${launcher}"
-        "${mod}, W,       exec, ${browser}"
-        "${mod}, E,       exec, ${fileManager}"
-        "${mod}, B,       exec, blueman-manager"
+      -- ── Launch ───────────────────────────────────────────────────────────────
+      hl.bind(mod .. " + Return", hl.dsp.exec_cmd(terminal),        { description = "Launch terminal" })
+      hl.bind(mod .. " + space",  hl.dsp.exec_cmd(launcher),        { description = "launch app launcher" })
+      hl.bind(mod .. " + W",      hl.dsp.exec_cmd(browser),         { description = "Launch browser" })
+      hl.bind(mod .. " + E",      hl.dsp.exec_cmd(fileManager),     { description = "Launch file manager" })
+      hl.bind(mod .. " + B",      hl.dsp.exec_cmd("blueman-manager"), { description = "Launch bluetooth manager" })
 
-        # ── Window management ─────────────────────────────────────────────────
-        "${mod},      Q, killactive"
-        "${mod},      F, fullscreen"
-        "${mod},      V, togglefloating"
-        "${modShift}, M, exit"
+      -- ── Window management ─────────────────────────────────────────────────────
+      hl.bind(mod .. " + Q", hl.dsp.exec_cmd("~/.dotfiles/scripts/hypr/kill.sh"),                  { description = "Kill active window" })
+      hl.bind(mod .. " + F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }), { description = "Toggle Fullscreen" })
+      hl.bind(mod .. " + V", hl.dsp.window.float({ action = "toggle" }),                           { description = "Toggle Floating" })
+      -- bind("modShift", "M", "exit")
 
-        # ── Focus movement ────────────────────────────────────────────────────
-        "${mod}, left,  movefocus, l"
-        "${mod}, right, movefocus, r"
-        "${mod}, up,    movefocus, u"
-        "${mod}, down,  movefocus, d"
-        "${mod}, H,     movefocus, l"
-        "${mod}, L,     movefocus, r"
-        "${mod}, K,     movefocus, u"
-        "${mod}, J,     movefocus, d"
+      -- ── Focus movement ────────────────────────────────────────────────────────
+      hl.bind(mod .. " + left",  hl.dsp.focus({ direction = "left" }),  { description = "Move focus left" })
+      hl.bind(mod .. " + right", hl.dsp.focus({ direction = "right" }), { description = "Move focus right" })
+      hl.bind(mod .. " + up",    hl.dsp.focus({ direction = "up" }),    { description = "Move focus up" })
+      hl.bind(mod .. " + down",  hl.dsp.focus({ direction = "down" }),  { description = "Move focus down" })
+      hl.bind(mod .. " + H",     hl.dsp.focus({ direction = "left" }),  { description = "Move focus left" })
+      hl.bind(mod .. " + L",     hl.dsp.focus({ direction = "right" }), { description = "Move focus right" })
+      hl.bind(mod .. " + K",     hl.dsp.focus({ direction = "up" }),    { description = "Move focus up" })
+      hl.bind(mod .. " + J",     hl.dsp.focus({ direction = "down" }),  { description = "Move focus down" })
 
-        # ── Window movement ───────────────────────────────────────────────────
-        "${modShift}, left,  movewindow, l"
-        "${modShift}, right, movewindow, r"
-        "${modShift}, up,    movewindow, u"
-        "${modShift}, down,  movewindow, d"
-        "${modShift}, H,     movewindow, l"
-        "${modShift}, L,     movewindow, r"
-        "${modShift}, K,     movewindow, u"
-        "${modShift}, J,     movewindow, d"
+      -- ── Window movement ───────────────────────────────────────────────────────
+      for i = 1, 4 do
+        local arrowkey = { "Left", "Right", "Up", "Down" }
+        local focusdir = { "l", "r", "u", "d" }
+        hl.bind("SUPER + SHIFT + " .. arrowkey[i], hl.dsp.window.move({ direction = focusdir[i] }),
+          { description = "Window: Move " .. arrowkey[i] })
+      end
 
-        # ── Keyboard resize ───────────────────────────────────────────────────
-        "${modControl}, left,  resizeactive, -40 0"
-        "${modControl}, right, resizeactive,  40 0"
-        "${modControl}, up,    resizeactive,  0 -40"
-        "${modControl}, down,  resizeactive,  0  40"
-        "${modControl}, H,     resizeactive, -40 0"
-        "${modControl}, L,     resizeactive,  40 0"
-        "${modControl}, K,     resizeactive,  0 -40"
-        "${modControl}, J,     resizeactive,  0  40"
+      -- ── Keyboard resize ───────────────────────────────────────────────────────
+      hl.bind(modControl .. " + right", hl.dsp.window.resize({ x = 100, y = 0,  relative = true }), { repeating = true }, { description = "Increase window width with keyboard" })
+      hl.bind(modControl .. " + left",  hl.dsp.window.resize({ x = -100, y = 0, relative = true }), { repeating = true }, { description = "Reduce window width with keyboard" })
+      hl.bind(modControl .. " + down",  hl.dsp.window.resize({ x = 0, y = 100,  relative = true }), { repeating = true }, { description = "Increase window height with keyboard" })
+      hl.bind(modControl .. " + up",    hl.dsp.window.resize({ x = 0, y = -100, relative = true }), { repeating = true }, { description = "Reduce window height with keyboard" })
+      hl.bind(modControl .. " + H",     hl.dsp.window.resize({ x = 100, y = 0,  relative = true }), { repeating = true }, { description = "Increase window width with keyboard" })
+      hl.bind(modControl .. " + L",     hl.dsp.window.resize({ x = -100, y = 0, relative = true }), { repeating = true }, { description = "Reduce window width with keyboard" })
+      hl.bind(modControl .. " + K",     hl.dsp.window.resize({ x = 0, y = 100,  relative = true }), { repeating = true }, { description = "Increase window height with keyboard" })
+      hl.bind(modControl .. " + J",     hl.dsp.window.resize({ x = 0, y = -100, relative = true }), { repeating = true }, { description = "Reduce window height with keyboard" })
 
-        # ── Monitor focus / move ──────────────────────────────────────────────
-        "${mod},      Tab,   focusmonitor, +1"
-        "${modShift}, Tab,   movewindow,   mon:+1"
+      -- ── Screenshots ───────────────────────────────────────────────────────────
+      hl.bind(mod .. " + Print",      hl.dsp.exec_cmd("grimblast --freeze copy area"))
+      hl.bind("Print",                hl.dsp.exec_cmd("grimblast copy output"))
+      hl.bind(modShift .. " + Print", hl.dsp.exec_cmd("grimblast --freeze save area"))
 
-        # ── Screenshots ───────────────────────────────────────────────────────
-        # SUPER+Print       → interactive region → clipboard
-        # Print             → full screen        → clipboard
-        # SUPER+SHIFT+Print → interactive region → save to ~/Pictures/Screenshots
-        "${mod},      Print, exec, ${screenshot} --freeze copy area"
-        ",            Print, exec, ${screenshot} copy output"
-        "${modShift}, Print, exec, ${screenshot} --freeze save area"
+      -- ── Media control (software MPRIS) ────────────────────────────────────────
+      hl.bind(mod .. " + period", hl.dsp.exec_cmd("playerctl next"),       { locked = true })
+      hl.bind(mod .. " + comma",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
+      hl.bind(mod .. " + slash",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 
-        # ── Media control (software MPRIS) ────────────────────────────────────
-        # These duplicates let the binds work even without XF86 keys on a TKL.
-        "${mod}, period, exec, playerctl next"
-        "${mod}, comma,  exec, playerctl previous"
-        "${mod}, slash,  exec, playerctl play-pause"
+      -- ── Volume control (software fallback) ────────────────────────────────────
+      hl.bind(mod .. " + equal", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"),    { locked = true })
+      hl.bind(mod .. " + minus", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),    { locked = true })
+      hl.bind(mod .. " + M",     hl.dsp.exec_cmd("wpctl set-mute   @DEFAULT_AUDIO_SINK@ toggle"), { locked = true })
 
-        # ── Volume control (software fallback) ────────────────────────────────
-        "${mod}, equal, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
-        "${mod}, minus, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-        "${mod}, M,     exec, wpctl set-mute   @DEFAULT_AUDIO_SINK@ toggle"
+      -- ── Audio-output switcher ─────────────────────────────────────────────────
+      hl.bind(mod .. " + A",      hl.dsp.exec_cmd("wpctl set-default $(wpctl status | awk '/AirPods Pro/{print $2}' | tr -d '.')"))
+      hl.bind(modShift .. " + A", hl.dsp.exec_cmd("wpctl set-default $(wpctl status | awk '/Built-in Audio Analog/{print $2}' | tr -d '.' | head -1)"))
 
-        # ── Audio-output switcher ─────────────────────────────────────────────
-        # Quickly swap the default PipeWire sink between AirPods and headphones.
-        # SUPER+A → AirPods Pro (for videos / music)
-        # SUPER+SHIFT+A → Built-in Analog (headphones on aux, for guitar monitoring)
-        "${mod},      A, exec, wpctl set-default $(wpctl status | awk '/AirPods Pro/{print $2}' | tr -d '.')"
-        "${modShift}, A, exec, wpctl set-default $(wpctl status | awk '/Built-in Audio Analog/{print $2}' | tr -d '.' | head -1)"
+      hl.bind(mod ..      " + G", hl.dsp.exec_cmd("~/.dotfiles/scripts/guitar.sh"))
+      hl.bind(modShift .. " + G", hl.dsp.exec_cmd("~/.dotfiles/scripts/unguitar.sh"))
 
-        "${mod},      G, exec, $HOME/.dotfiles/scripts/guitar.sh"
-        "${modShift}, G, exec, $HOME/.dotfiles/scripts/unguitar.sh"
-      ]
-      ++ wsSwitchBinds
-      ++ wsMoveBinds;
+      -- ── Workspace switch + move (1-9, 0 → 10) ────────────────────────────────
+      for i = 1, 10 do
+        local key = i % 10
+        hl.bind(mod .. " + " .. key,                  hl.dsp.focus({ workspace = i}), { description = "Focus workspace " .. i })
+        hl.bind(modShift .. " + " .. key,     hl.dsp.window.move({ workspace = i }), { description = "Move window to workspace " .. i })
+      end
 
-    # ── Locked binds (fire even when screen is locked) ─────────────────────────
-    # XF86 media / volume keys should always work regardless of lock state.
-    bindl = [
-      ", XF86AudioPlay,  exec, playerctl play-pause"
-      ", XF86AudioNext,  exec, playerctl next"
-      ", XF86AudioPrev,  exec, playerctl previous"
-      ", XF86AudioStop,  exec, playerctl stop"
-      ", XF86AudioMute,  exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-      ", XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
-    ];
+      hl.bind("XF86AudioPlay",    hl.dsp.exec_cmd("playerctl play-pause"), {locked = true })
+      hl.bind("XF86AudioNext",    hl.dsp.exec_cmd("playerctl next"),       { locked = true })
+      hl.bind("XF86AudioPrev",    hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
+      hl.bind("XF86AudioStop",    hl.dsp.exec_cmd("playerctl stop"),       { locked = true })
+      hl.bind("XF86AudioMute",    hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),   { locked = true })
+      hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"), { locked = true })
 
-    # ── Repeat binds (fire on hold) ────────────────────────────────────────────
-    # Volume held down should keep stepping.
-    bindle = [
-      ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+"
-      ", XF86AudioLowerVolume, exec, wpctl set-volume      @DEFAULT_AUDIO_SINK@ 5%-"
-    ];
+      -- ── Repeat binds (fire on hold) ───────────────────────────────────────────
+      hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
+      hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume      @DEFAULT_AUDIO_SINK@ 5%-"), { locked = true, repeating = true })
 
-    # ── Mouse binds ────────────────────────────────────────────────────────────
-    bindm = [
-      "${mod}, mouse:272, movewindow"
-      "${mod}, mouse:273, resizewindow"
-    ];
+      -- ==========================================
+      -- MINI KEYBOARD STATE MACHINE
+      -- ==========================================
+      hl.bind("XF86Launch8", hl.dsp.exec_cmd("~/.dotfiles/scripts/minikb.sh switch"))
 
-    extraConfig = ''
-      # ==========================================
-      # MINI KEYBOARD STATE MACHINE
-      # No submaps! Main keyboard is never blocked.
-      # ==========================================
+      -- W A S D Buttons
+      hl.bind("XF86Tools",   hl.dsp.exec_cmd("~/.dotfiles/scripts/minikb.sh w"))
+      hl.bind("XF86Launch5", hl.dsp.exec_cmd("~/.dotfiles/scripts/minikb.sh a"))
+      hl.bind("XF86Launch6", hl.dsp.exec_cmd("~/.dotfiles/scripts/minikb.sh s"))
+      hl.bind("XF86Launch7", hl.dsp.exec_cmd("~/.dotfiles/scripts/minikb.sh d"))
 
-      # Knob Press changes the mode
-      bind = , XF86Launch8, exec, $HOME/.dotfiles/scripts/minikb.sh switch
-
-      # --- W A S D Buttons ---
-      bind = , XF86Tools,  exec, $HOME/.dotfiles/scripts/minikb.sh w      # W
-      bind = , XF86Launch5, exec, $HOME/.dotfiles/scripts/minikb.sh a      # A
-      bind = , XF86Launch6, exec, $HOME/.dotfiles/scripts/minikb.sh s      # S
-      bind = , XF86Launch7, exec, $HOME/.dotfiles/scripts/minikb.sh d      # D
-
-      # --- Knob Up / Down ---
-      bind = , XF86Launch9, exec, $HOME/.dotfiles/scripts/minikb.sh up     # Knob Up
-      bind = , F19,         exec, $HOME/.dotfiles/scripts/minikb.sh down   # Knob Down
-    '';
-  };
+      -- Knob Up / Down
+      hl.bind("XF86Launch9", hl.dsp.exec_cmd("~/.dotfiles/scripts/minikb.sh up"))
+      hl.bind("F19",         hl.dsp.exec_cmd("~/.dotfiles/scripts/minikb.sh down"))
+  '';
 }

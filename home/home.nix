@@ -29,7 +29,7 @@ in {
 
   home.username = "wilko";
   home.homeDirectory = "/home/wilko";
-  home.stateVersion = "25.11";
+  home.stateVersion = "26.05";
 
   home.packages = with pkgs;
     [
@@ -62,7 +62,8 @@ in {
       gst_all_1.gst-plugins-base
       gst_all_1.gstreamer
       protonup-qt
-
+      prismlauncher
+      jq
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-cjk-serif
@@ -114,6 +115,20 @@ in {
         ];
       })
 
+      # Core libraries required by MT-PDK2
+      libx11
+      libxcb
+      libxcb-util
+      libxcb-cursor
+      libxkbcommon
+      freetype
+      glib
+      cairo
+      pango
+      fontconfig
+      libpng
+      zlib
+
       # ── Development ──────────────────────────────────────────────────────────
       rust-analyzer
       cargo
@@ -122,6 +137,7 @@ in {
       bash-language-server
       nil
       yaml-language-server
+      python3
       # Formatters & Linters
       shfmt
       alejandra

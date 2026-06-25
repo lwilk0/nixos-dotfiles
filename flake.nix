@@ -4,7 +4,7 @@
   inputs = {
     # Nix PKGS
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
-    nixpkgs.url = "nixpkgs/nixos-25.11";
+    nixpkgs.url = "nixpkgs/nixos-26.05";
 
     pkgs-local.url = "path:/home/wilko/.local/pkgs";
 
@@ -12,7 +12,7 @@
 
     # Home Manager
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

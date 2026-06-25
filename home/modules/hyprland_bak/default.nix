@@ -9,28 +9,21 @@
     ./rules.nix
     ./monitors.nix
     ./env.nix
-    ./colours.nix
   ];
 
   wayland.windowManager.hyprland = {
     enable = true;
     xwayland.enable = true;
 
+    settings.input.kb_layout = "gb";
+
     package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
     portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
 
+    # Env Vars
     systemd = {
       enable = true;
       variables = ["--all"];
     };
   };
-
-  xdg.configFile."hypr/hyprland.lua".text = ''
-    require("env")
-    require("monitors")
-    require("settings")
-    require("scheme.default")
-    require("rules")
-    require("binds")
-  '';
 }
