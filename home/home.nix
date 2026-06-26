@@ -138,6 +138,7 @@ in {
       nil
       yaml-language-server
       python3
+      arduino-ide
       # Formatters & Linters
       shfmt
       alejandra

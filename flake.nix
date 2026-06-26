@@ -35,12 +35,6 @@
       url = "github:caelestia-dots/cli";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # Chaotic
-    chaotic = {
-      url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
   };
 
   outputs = {
@@ -51,7 +45,6 @@
     hyprland,
     xdg-portal-hyprland,
     caelestia-shell,
-    chaotic,
     ...
   } @ inputs: let
     lib = nixpkgs.lib;
@@ -65,7 +58,6 @@
           ./system/pc
           ./modules
           inputs.musnix.nixosModules.musnix
-          chaotic.nixosModules.default
           {programs.appimage.binfmt = true;}
         ];
         specialArgs = {inherit inputs;};

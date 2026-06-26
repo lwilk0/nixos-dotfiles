@@ -3,7 +3,7 @@
 
   users.users.wilko = {
     isNormalUser = true;
-    extraGroups = ["wheel" "snd-virmidi" "audio" "realtime" "network" "lp" "networkmanager" "libvirtd" "cdrom"]; # Enable ‘sudo’ for the user.
+    extraGroups = ["wheel" "snd-virmidi" "audio" "realtime" "network" "lp" "networkmanager" "libvirtd" "cdrom" "dialout"]; # Enable ‘sudo’ for the user.
   };
 
   security.pam.loginLimits = [
