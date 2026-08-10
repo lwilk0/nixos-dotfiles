@@ -18,12 +18,12 @@
 
     # Hyprland
     hyprland = {
-      url = "github:hyprwm/Hyprland";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      url = "github:hyprwm/Hyprland/v0.46.0";
+      inputs.nixpkgs.follows = "nixpkgs"; # Keeps it building against 26.05
     };
     xdg-portal-hyprland = {
-      url = "github:hyprwm/xdg-desktop-portal-hyprland";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      url = "github:hyprwm/xdg-desktop-portal-hyprland/v1.3.8"; # Pinned to match
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Caelestia
@@ -57,7 +57,7 @@
       config.allowUnfree = true;
     };
   in {
-        nixosConfigurations = {
+    nixosConfigurations = {
       nixos = lib.nixosSystem {
         inherit pkgs;
         # Combined specialArgs (removed extraSpecialArgs)
