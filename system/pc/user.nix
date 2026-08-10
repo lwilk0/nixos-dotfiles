@@ -3,7 +3,7 @@
 
   users.users.wilko = {
     isNormalUser = true;
-    extraGroups = ["wheel" "snd-virmidi" "audio" "realtime" "network" "lp" "networkmanager" "libvirtd" "cdrom" "dialout"]; # Enable ‘sudo’ for the user.
+    extraGroups = ["wheel" "adbusers" "snd-virmidi" "audio" "realtime" "network" "lp" "networkmanager" "libvirtd" "cdrom" "dialout"]; # Enable ‘sudo’ for the user.
   };
 
   security.pam.loginLimits = [
@@ -29,8 +29,6 @@
   '';
 
   systemd.services.NetworkManager-wait-online.enable = false;
-
-  nixpkgs.config.allowUnfree = true;
 
   systemd.tmpfiles.rules = ["L+ /usr/bin/true - - - - /run/current-system/sw/bin/true"];
 }

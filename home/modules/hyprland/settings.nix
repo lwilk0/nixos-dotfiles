@@ -7,8 +7,8 @@
         gaps_out  = 5,
         border_size = 2,
         col = {
-            active_border   = { colors = {"rgba(33ccffee)", "rgba(00ff99ee)"}, angle = 45 },
-            inactive_border = "rgba(595959aa)",
+          active_border   = { colors = {"rgba(33ccffee)", "rgba(00ff99ee)"}, angle = 45 },
+          inactive_border = "rgba(595959aa)",
         },
         resize_on_border = false,
         allow_tearing    = false,
@@ -20,19 +20,23 @@
         rounding = 15,
 
         blur = {
-            enabled            = true,
-            size               = 7,
-            passes             = 4,
-            new_optimizations  = true,
-            xray               = false,
-            ignore_opacity     = false,
+          enabled            = true,
+          size               = 7,
+          passes             = 3,
+          ignore_opacity     = true,
+
+          noise              = 0.08,
+          contrast           = 1.5,
+
+          new_optimizations  = true,
+          xray               = false,
         },
 
         shadow = {
-            enabled      = true,
-            range        = 4,
-            render_power = 3,
-            color        = "rgba(1a1a1aee)",
+          enabled      = true,
+          range        = 4,
+          render_power = 3,
+          color        = "rgba(1a1a1aee)",
         },
 
         dim_inactive = true,
@@ -41,21 +45,21 @@
 
       -- ── Animations ─────────────────────────────────────────────────────────────
       animations = {
-          enabled = true,
+        enabled = true,
       },
 
       -- ── Input ──────────────────────────────────────────────────────────────────
       input = {
-          kb_layout     = "gb",
-          follow_mouse  = 1,
-          sensitivity   = 0,
-          accel_profile = "flat",
+        kb_layout     = "gb",
+        follow_mouse  = 1,
+        sensitivity   = 0,
+        accel_profile = "flat",
       },
 
       -- ── Dwindle layout ─────────────────────────────────────────────────────────
       dwindle = {
-          preserve_split = true,
-          smart_split    = false,
+        preserve_split = true,
+        smart_split    = false,
       },
 
       -- ── Miscellaneous ──────────────────────────────────────────────────────────
@@ -71,35 +75,41 @@
 
       -- ── Cursor ─────────────────────────────────────────────────────────────────
       cursor = {
-          inactive_timeout    = 3,
-          no_hardware_cursors = false,
+        inactive_timeout    = 3,
+        no_hardware_cursors = false,
       },
     })
 
-      hl.curve("easeOutQuint",   { type = "bezier", points = { {0.23, 1}, {0.32, 1} } })
-      hl.curve("easeInOutCubic", { type = "bezier", points = { {0.65, 0.05}, {0.36, 1} } })
-      hl.curve("linear",         { type = "bezier", points = { {0, 0}, {1, 1} } })
-      hl.curve("almostLinear", { type = "bezier", points = { {0.5, 0.5}, {0.75, 1} } })
-      hl.curve("quick",         { type = "bezier", points = { {0.15, 0}, {0.1, 1} } })
+    hl.on("hyprland.start", function ()
+      hl.exec_cmd("protonvpn-app")
+    end)
 
-      hl.animation({ leaf = "windows",       enabled = true, speed = 5.39, bezier = "easeOutQuint",  style = "slide" })
-      hl.animation({ leaf = "windowsIn",     enabled = true, speed = 4.10, bezier = "easeOutQuint",  style = "slide" })
-      hl.animation({ leaf = "windowsOut",    enabled = true, speed = 1.49, bezier = "linear",        style = "slide" })
+    hl.curve("smoothOut",      { type = "bezier", points = { {0.36, 0.00}, {0.66, -0.56} } })
+    hl.curve("smoothIn",       { type = "bezier", points = { {0.25, 1.00}, {0.50, 1.00}  } })
+    hl.curve("overshoot",      { type = "bezier", points = { {0.05, 0.90}, {0.10, 1.05}  } })
+    hl.curve("softSnap",       { type = "bezier", points = { {0.40, 0.00}, {0.20, 1.00}  } })
+    hl.curve("fluent",         { type = "bezier", points = { {0.00, 0.00}, {0.20, 1.00}  } })
+    hl.curve("easeInOutExpo",  { type = "bezier", points = { {0.87, 0.00}, {0.13, 1.00}  } })
 
-      hl.animation({ leaf = "border",        enabled = true, speed = 5.39, bezier = "easeOutQuint" })
-      hl.animation({ leaf = "fadeIn",        enabled = true, speed = 1.73, bezier = "almostLinear" })
-      hl.animation({ leaf = "fadeOut",       enabled = true, speed = 1.46, bezier = "almostLinear" })
-      hl.animation({ leaf = "fade",          enabled = true, speed = 3.03, bezier = "quick" })
-
-      hl.animation({ leaf = "layers",       enabled = true, speed = 3.81, bezier = "easeOutQuint" })
-      hl.animation({ leaf = "layersIn",     enabled = true, speed = 4.00, bezier = "easeOutQuint",  style = "fade" })
-      hl.animation({ leaf = "layersOut",    enabled = true, speed = 1.50, bezier = "linear",         style = "fade" })
-
-      hl.animation({ leaf = "fadeLayersIn",  enabled = true, speed = 1.79, bezier = "almostLinear" })
-      hl.animation({ leaf = "fadeLayersOut", enabled = true, speed = 1.39, bezier = "almostLinear" })
-
-      hl.animation({ leaf = "workspaces",     enabled = true, speed = 1.94, bezier = "almostLinear", style = "fade" })
-      hl.animation({ leaf = "workspacesIn",   enabled = true, speed = 1.21, bezier = "almostLinear", style = "fade" })
-      hl.animation({ leaf = "workspacesOut",  enabled = true, speed = 1.94, bezier = "almostLinear", style = "fade" })
+    -- Windows
+    hl.animation({ leaf = "windows",       enabled = true, speed = 5.00, bezier = "overshoot",  style = "popin 80%" })
+    hl.animation({ leaf = "windowsIn",     enabled = true, speed = 5.00, bezier = "overshoot",  style = "popin 80%" })
+    hl.animation({ leaf = "windowsOut",    enabled = true, speed = 4.00, bezier = "smoothOut",  style = "popin 95%" })
+    hl.animation({ leaf = "windowsMove",   enabled = true, speed = 4.00, bezier = "softSnap"                        })
+    -- Layers
+    hl.animation({ leaf = "layersIn",      enabled = true, speed = 7.00, bezier = "smoothIn",   style = "slide"     })
+    hl.animation({ leaf = "layersOut",     enabled = true, speed = 8.00, bezier = "softSnap",   style = "slide"     })
+    -- Fade
+    hl.animation({ leaf = "fade",          enabled = true, speed = 4.00, bezier = "smoothIn" })
+    hl.animation({ leaf = "fadeIn",        enabled = true, speed = 4.00, bezier = "smoothIn" })
+    hl.animation({ leaf = "fadeOut",       enabled = true, speed = 4.00, bezier = "smoothOut" })
+    hl.animation({ leaf = "fadeSwitch",    enabled = true, speed = 4.00, bezier = "smoothIn" })
+    hl.animation({ leaf = "fadeShadow",    enabled = true, speed = 4.00, bezier = "smoothIn" })
+    hl.animation({ leaf = "fadeDim",       enabled = true, speed = 4.00, bezier = "smoothIn" })
+    hl.animation({ leaf = "fadeDpms",      enabled = true, speed = 4.00, bezier = "smoothIn" })
+    hl.animation({ leaf = "fadeLayers",    enabled = true, speed = 3.00, bezier = "softSnap" })
+    -- Workspaces
+    hl.animation({ leaf = "workspaces",          enabled = true, speed = 5.00, bezier = "overshoot", style = "slidefade 30%" })
+    hl.animation({ leaf = "specialWorkspace",    enabled = true, speed = 1.21, bezier = "overshoot", style = "slidefadevert 30%" })
   '';
 }

@@ -4,7 +4,7 @@
 
   # Enable virt-manager for GUI management
   programs.virt-manager.enable = true;
-
+  services.gvfs.enable = true;
   # Load necessary kernel modules
   boot.kernelModules = ["kvm-amd" "vfio-pci" "vfio_iommu_type1"];
 

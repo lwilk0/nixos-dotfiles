@@ -84,6 +84,9 @@
         hl.bind(modShift .. " + " .. key,     hl.dsp.window.move({ workspace = i }), { description = "Move window to workspace " .. i })
       end
 
+      hl.bind(mod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })    -- ALT + LMB: Move a window
+      hl.bind(mod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })  -- ALT + RMB: Resize a window
+
       hl.bind("XF86AudioPlay",    hl.dsp.exec_cmd("playerctl play-pause"), {locked = true })
       hl.bind("XF86AudioNext",    hl.dsp.exec_cmd("playerctl next"),       { locked = true })
       hl.bind("XF86AudioPrev",    hl.dsp.exec_cmd("playerctl previous"),   { locked = true })

@@ -92,6 +92,7 @@
       memf = "free -h";
       # Disk usage (human-readable, sorted by size)
       duf = "du -sh * | sort -h";
+      bb = "appimage-run /home/wilko/.local/pkgs/appimages/BB_Launcher-qt-Downloader.AppImage";
 
       # ── Yabridge ──────────────────────────────────────────────────────────
       ybs = "yabridgectl status";

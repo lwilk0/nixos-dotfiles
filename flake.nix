@@ -35,6 +35,8 @@
       url = "github:caelestia-dots/cli";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
   };
 
   outputs = {
@@ -45,22 +47,33 @@
     hyprland,
     xdg-portal-hyprland,
     caelestia-shell,
+    chaotic,
     ...
   } @ inputs: let
     lib = nixpkgs.lib;
     system = "x86_64-linux";
-    pkgs = nixpkgs.legacyPackages.${system};
+    pkgs = import nixpkgs {
+      inherit system;
+      config.allowUnfree = true;
+    };
   in {
-    nixosConfigurations = {
+        nixosConfigurations = {
       nixos = lib.nixosSystem {
-        inherit system;
+        inherit pkgs;
+        # Combined specialArgs (removed extraSpecialArgs)
+        specialArgs = {
+          inherit inputs;
+          pkgs-unstable = import nixpkgs-unstable {
+            inherit system;
+          };
+        };
         modules = [
           ./system/pc
           ./modules
           inputs.musnix.nixosModules.musnix
+          chaotic.nixosModules.default
           {programs.appimage.binfmt = true;}
         ];
-        specialArgs = {inherit inputs;};
       };
     };
 

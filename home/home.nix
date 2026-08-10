@@ -35,21 +35,17 @@ in {
     [
       # ── Core desktop ──────────────────────────────────────────────────────────
       yazi-themed
-      brave
       qbittorrent
       caelestia-cli
       btop
       discord
-      obsidian
-      anki
-      ferdium
+      vscodium
       nerd-fonts.jetbrains-mono
       xdg-utils
       gnome-keyring
       fastfetch
       gnome-keyring
       blueman
-      librewolf
       samba
       nicotine-plus
       unzip
@@ -67,6 +63,13 @@ in {
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-cjk-serif
+      appimage-run
+      xwayland-satellite
+      postman
+
+      libusb1
+      android-tools
+      wireshark
 
       # ── Utilities ────────────────────────────────────────────────────────────
       playerctl # MPRIS media control — used by Hyprland media keybinds
@@ -83,8 +86,7 @@ in {
       # ── GPG ──────────────────────────────────────────────────────────────────
       gpgme
 
-      # ── Wine / gaming ────────────────────────────────────────────────────────
-      wineWowPackages.wayland # 64+32-bit Wine with staging patches
+      wineWow64Packages.yabridge
       winetricks
 
       # ── Neovim ───────────────────────────────────────────────────────────────
@@ -117,7 +119,6 @@ in {
 
       # Core libraries required by MT-PDK2
       libx11
-      libxcb
       libxcb-util
       libxcb-cursor
       libxkbcommon
@@ -139,6 +140,10 @@ in {
       yaml-language-server
       python3
       arduino-ide
+      gdb
+      dbvisualizer
+      jdk21
+
       # Formatters & Linters
       shfmt
       alejandra
@@ -146,7 +151,6 @@ in {
     ]
     ++ [
       pkgs-unstable.rustc
-      pkgs-unstable.lutris-unwrapped
     ];
 
   # ── direnv — automatic nix dev-shell loading ──────────────────────────────
@@ -164,7 +168,7 @@ in {
 
   # ── Session variables ────────────────────────────────────────────────────
   home.sessionVariables = {
-    LV2_PATH = "$HOME/.nix-profile/lib/lv2";
+    LV2_PATH = "$HOME/.lv2/lib/lv2";
     # Tell Rust / cargo to use sccache if it is ever added; harmless if not.
     # RUSTC_WRAPPER = "sccache";
   };

@@ -19,10 +19,10 @@
     package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
     portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
 
-    systemd = {
+    /*systemd = {
       enable = true;
       variables = ["--all"];
-    };
+    };*/
   };
 
   xdg.configFile."hypr/hyprland.lua".text = ''

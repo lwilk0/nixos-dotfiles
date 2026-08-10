@@ -31,7 +31,12 @@
     -- ══════════════════════════════════════════════════════════════════════
     hl.window_rule({
       match   = { class = "kitty" },
-      opacity = "0.9 override 0.9 override 0.9 override",
+      opacity = "0.86 override 0.8 override 0.8 override",
+    })
+
+    hl.window_rule({
+      match   = { class = "codium" },
+      opacity = "0.86 override 0.8 override 0.8 override",
     })
     -- ══════════════════════════════════════════════════════════════════════
     -- AUDIO APPS — NO IDLE INHIBIT
@@ -45,7 +50,14 @@
     -- MISCELLANEOUS
     -- ══════════════════════════════════════════════════════════════════════
     hl.window_rule({
-      match = { class = "yabridge-host.exe.so" },
+      match = { class = "yabridge-host.exe" },
+      float = true,
+      pin = true,
+      no_focus = true,
+    })
+
+    hl.window_rule({
+      match = { title = "Soldano SLO-100 X (GUI)" },
       float = true,
       pin = true,
       no_focus = true,
