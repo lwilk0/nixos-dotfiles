@@ -8,7 +8,7 @@
 
     pkgs-local.url = "path:/home/wilko/.local/pkgs";
 
-    musnix = {url = "github:musnix/musnix";};
+    musnix = {url = "github:musnix/musnix/a84602f";};
 
     # Home Manager
     home-manager = {

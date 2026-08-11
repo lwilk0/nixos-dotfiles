@@ -12,5 +12,6 @@
     ./docker
     ./postgres
     ./librewolf
+    ./wireshark
   ];
 }

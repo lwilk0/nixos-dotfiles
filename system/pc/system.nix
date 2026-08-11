@@ -54,6 +54,7 @@
   };
 
   boot.kernelModules = [
+    "usbmon"
     "amdgpu"
     "i915"
   ];

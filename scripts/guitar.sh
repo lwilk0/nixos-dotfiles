@@ -1,12 +1,7 @@
 #!/usr/bin/env bash
-# =============================================================================
-# guitar.sh — Guitar practice / monitoring mode (NixOS / PipeWire-JACK)
-# =============================================================================
 
 set -uo pipefail
 
-# ── NixOS: Ensure Wayland vars are passed to the GUI apps ─────────────────────
-# This prevents Carla/QjackCtl from opening on the wrong display or failing.
 if [[ -n "${WAYLAND_DISPLAY:-}" ]]; then
   export XDG_CURRENT_DESKTOP="${XDG_CURRENT_DESKTOP:-hyprland}"
   export QT_QPA_PLATFORM="${QT_QPA_PLATFORM:-wayland}"
@@ -15,14 +10,10 @@ fi
 # ── Config ────────────────────────────────────────────────────────────────────
 WAIT_CARLA=30
 
-# !!! NIXOS WARNING !!!
-# PipeWire ALSA node names can change between reboots if USB devices swap ports.
-# If this script fails to connect, run `pw-cli info all | grep -i "node.name"`
-# or `pw-jack jack_lsp` to verify these exact strings!
 NUX_CAPTURE_L="NUX NGA-3BT:capture_FL"
 NUX_CAPTURE_R="NUX NGA-3BT:capture_FR"
-HEADPHONES_L="ALC897 Analog:playback_FL"
-HEADPHONES_R="ALC897 Analog:playback_FR"
+HEADPHONES_L="NUX NGA-3BT:playback_FL"
+HEADPHONES_R="NUX NGA-3BT:playback_FR"
 
 # ── Colours & Helpers ─────────────────────────────────────────────────────────
 GREEN='\033[0;32m'; YELLOW='\033[1;33m'; RED='\033[0;31m'; CYAN='\033[0;36m'; RESET='\033[0m'
@@ -35,7 +26,7 @@ notify() {
   notify-send --icon=audio-x-generic --app-name="Guitar" "$1" "$2" 2>/dev/null || true
 }
 
-# ── Guard: already running ────────────────────────────────────────────────────
+# ── already running ────────────────────────────────────────────────────
 if pgrep -x carla &>/dev/null; then
   warn "Carla is already running."
   read -rp "  Restart the guitar session? [y/N] " choice
@@ -46,7 +37,7 @@ if pgrep -x carla &>/dev/null; then
   sleep 1
 fi
 
-# ── Helper: wait for a JACK port pattern to appear ───────────────────────────
+# ── wait for a JACK port pattern to appear ───────────────────────────
 wait_for_port() {
   local pattern="$1" label="$2" timeout="$3" elapsed=0
   log "Waiting for ${label} ports..."
@@ -62,7 +53,7 @@ wait_for_port() {
   ok "${label} ports found."
 }
 
-# ── Helper: connect with error reporting ─────────────────────────────────────
+# ── connect with error reporting ─────────────────────────────────────
 connect() {
   local src="$1" dst="$2"
   if pw-link "${src}" "${dst}" 2>/dev/null; then
@@ -76,14 +67,13 @@ connect() {
 log "Starting QjackCtl (JACK monitor)..."
 pw-jack qjackctl &
 
-log "Starting Carla (loads last session with Archetype Gojira)..."
-PIPEWIRE_QUANTUM="128/48000" pw-jack carla &
+log "Starting Carla..."
+PIPEWIRE_QUANTUM="256/48000" pw-jack carla /home/wilko/default.carxp &
 
 # ── Wait for Carla ────────────────────────────────────────────────────────────
 sleep 0.5
 
 # ── Discover exact Carla port names (Robust Regex) ───────────────────────────
-# Fallback to common names if the regex didn't match
 CARLA_IN_1="Carla:audio-in1"
 CARLA_IN_2="Carla:audio-in2"
 CARLA_OUT_1="Carla:audio-out1"
@@ -105,10 +95,13 @@ pw-link "${NUX_CAPTURE_R}" "${CARLA_IN_2}"
 pw-link "${CARLA_OUT_1}" "${HEADPHONES_L}"
 pw-link "${CARLA_OUT_2}" "${HEADPHONES_R}"
 
+# Set amp to dry out
+amidi -p "hw:2,0,0" -S "B0 58 00" 
+
 # ── Done ──────────────────────────────────────────────────────────────────────
 echo ""
 ok "═══════════════════════════════════════════════════"
 ok "  Guitar mode active."
-ok "  NUX NGA-3BT → Archetype Gojira → Headphones"
+ok "  NUX NGA-3BT → Headphones"
 ok "═══════════════════════════════════════════════════"
-notify "Guitar mode active 🎸" "NUX → Gojira → Headphones"
+notify "Guitar mode active"
