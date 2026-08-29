@@ -98,6 +98,8 @@ pw-link "${CARLA_OUT_2}" "${HEADPHONES_R}"
 # Set amp to dry out
 amidi -p "hw:2,0,0" -S "B0 58 00" 
 
+echo "midi" > "/tmp/minikb_mode"
+
 # ── Done ──────────────────────────────────────────────────────────────────────
 echo ""
 ok "═══════════════════════════════════════════════════"

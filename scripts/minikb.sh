@@ -54,6 +54,14 @@ toggle_midi() {
     echo "0" >"$state_file"
   fi
 }
+
+nux_step() {
+  local step="$1"  # e.g. 5%+ or 10%-
+  local id
+  id="$(wpctl status | awk '/^ *[0-9]+\\. alsa_output\\.usb-NUX_NUX_NGA-3BT_.*\\.analog-stereo/ {print $1; exit}')"
+  [ -n "$id" ] || { echo "NUX sink not found"; return 1; }
+  wpctl set-volume "$id" "$step"
+}
 # -------------------------------------------------------------
 
 case "$CURRENT_MODE" in
@@ -104,8 +112,10 @@ midi)
   a) toggle_midi "a" "01" ;;
   s) toggle_midi "s" "04" ;;
   d) toggle_midi "d" "03" ;;
-  up) amidi -p "$MIDI_PORT" -S "B0 01 7F" ;;
-  down) amidi -p "$MIDI_PORT" -S "B0 01 00" ;;
+  #up) amidi -p "$MIDI_PORT" -S "B0 01 7F" ;;
+  #down) amidi -p "$MIDI_PORT" -S "B0 01 00" ;;
+  up) nux_step 5%+ ;;
+  up) nux_step 5%- ;;
   esac
   ;;
 esac

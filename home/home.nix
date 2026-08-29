@@ -33,7 +33,6 @@ in {
 
   home.packages = with pkgs;
     [
-      # ── Core desktop ──────────────────────────────────────────────────────────
       yazi-themed
       qbittorrent
       caelestia-cli
@@ -66,24 +65,21 @@ in {
       appimage-run
       xwayland-satellite
       postman
-
+      imagemagick
       libusb1
       android-tools
       wireshark
 
-      # ── Utilities ────────────────────────────────────────────────────────────
-      playerctl # MPRIS media control — used by Hyprland media keybinds
-      wl-clipboard # wl-copy / wl-paste — essential for Wayland clipboard
-      grimblast # Hyprland-aware screenshot wrapper around grim + slurp
-      libnotify # notify-send — lets scripts send desktop notifications
+      playerctl
+      wl-clipboard
+      grimblast
+      libnotify
       bat
       ripgrep
       fd
       lazygit
       dxvk
       cabextract
-
-      # ── GPG ──────────────────────────────────────────────────────────────────
       gpgme
 
       wineWow64Packages.yabridge
@@ -103,8 +99,6 @@ in {
       pipewire.jack
       pulseaudio
 
-      # LV2 plugin bundle — merged into a single profile path so Carla / Bitwig
-      # find everything under $HOME/.nix-profile/lib/lv2 without extra config.
       (pkgs.symlinkJoin {
         name = "all-lv2-plugins";
         paths = [
@@ -143,7 +137,8 @@ in {
       gdb
       dbvisualizer
       jdk21
-
+      freetube
+      
       # Formatters & Linters
       shfmt
       alejandra

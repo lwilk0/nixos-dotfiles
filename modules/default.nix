@@ -13,5 +13,6 @@
     ./postgres
     ./librewolf
     ./wireshark
+    ./podman
   ];
 }
