@@ -11,7 +11,7 @@
           inactive_border = "rgba(595959aa)",
         },
         resize_on_border = false,
-        allow_tearing    = false,
+        allow_tearing    = true,
         layout           = "dwindle",
       },
 

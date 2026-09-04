@@ -3,6 +3,7 @@
 
   users.users.wilko = {
     isNormalUser = true;
+    autoSubUidGidRange = true; 
     extraGroups = ["wheel" "wireshark" "adbusers" "snd-virmidi" "audio" "realtime" "network" "lp" "networkmanager" "libvirtd" "cdrom" "dialout"]; # Enable ‘sudo’ for the user.
   };
 

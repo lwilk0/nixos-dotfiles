@@ -18,17 +18,6 @@
     options amdgpu ppfeaturemask=0xffffffff
   '';
 
-  systemd.services.amdgpu-performance-profile = {
-    description = "Set AMD GPU power profile to 3D_FULL_SCREEN";
-    wantedBy = ["multi-user.target"];
-    after = ["systemd-udev-settle.service"];
-
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-    };
-  };
-
   nix.daemonCPUSchedPolicy = "idle";
   nix.daemonIOSchedClass = "idle";
 }

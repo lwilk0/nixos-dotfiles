@@ -7,9 +7,4 @@
       defaultNetwork.settings.dns_enabled = true;
     };
   };
-
-  users.users.wilko = {
-    isNormalUser = true;
-    autoSubUidGidRange = true; 
-  };
 }

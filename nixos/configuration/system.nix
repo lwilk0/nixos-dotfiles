@@ -3,7 +3,7 @@
   pkgs,
   ...
 }: {
-  system.stateVersion = "26.05";
+  system.stateVersion = "25.11";
 
   # NixOS 26.05 forces systemd in the initrd, which hangs on dual-GPU/IOMMU
   # setups during early boot. This reverts to the stable 24.11 behavior.

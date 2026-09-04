@@ -33,7 +33,6 @@ in {
       xdg-utils
       gnome-keyring
       fastfetch
-      gnome-keyring
       blueman
       samba
       nicotine-plus
@@ -52,6 +51,7 @@ in {
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-cjk-serif
+      pkgs.nerd-fonts.jetbrains-mono
       appimage-run
       xwayland-satellite
       postman
