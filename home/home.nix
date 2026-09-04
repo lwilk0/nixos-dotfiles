@@ -67,9 +67,7 @@ in {
       postman
       imagemagick
       libusb1
-      android-tools
-      wireshark
-
+      freetube
       playerctl
       wl-clipboard
       grimblast
@@ -79,7 +77,6 @@ in {
       fd
       lazygit
       dxvk
-      cabextract
       gpgme
 
       wineWow64Packages.yabridge
@@ -137,7 +134,6 @@ in {
       gdb
       dbvisualizer
       jdk21
-      freetube
       
       # Formatters & Linters
       shfmt
