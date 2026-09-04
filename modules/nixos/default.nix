@@ -1,13 +1,13 @@
 {config, ...}: {
   imports = [
-    ./steam
-    ./keyring
-    ./bitwig
-    ./gnupg
-    ./protonvpn
-    ./k3b
-    ./podman
-    ./nix-ld
-    ./librewolf
+    ./steam.nix
+    ./keyring.nix
+    ./bitwig.nix
+    ./gnupg.nix
+    ./protonvpn.nix
+    ./k3b.nix
+    ./podman.nix
+    ./nix-ld.nix
+    ./librewolf.nix
   ];
 }
