@@ -3,15 +3,13 @@
   home.packages = with pkgs; [
     (pkgs.runCommandLocal "aesthetic-night-gtk3-theme" {} ''
       mkdir -p $out/share/themes/Aesthetic-Night
-      cp -r ${../../../themes/aesthetic-night/gtk3}/* $out/share/themes/Aesthetic-Night/
+      cp -r ${../../home-manager/themes/aesthetic-night/gtk3}/* $out/share/themes/Aesthetic-Night/
     '')
   ];
 
-  # GTK4 goes to ~/.config/gtk-4.0 (where many GTK4 apps still look)
-  xdg.configFile."gtk-4.0/gtk.css".source = ../../../themes/aesthetic-night/gtk4/gtk.css;
-  xdg.configFile."gtk-4.0/assets".source = ../../../themes/aesthetic-night/gtk4/assets;
+  xdg.configFile."gtk-4.0/gtk.css".source = ../../home-manager/themes/aesthetic-night/gtk4/gtk.css;
+  xdg.configFile."gtk-4.0/assets".source = ../../home-manager/themes/aesthetic-night/gtk4/assets;
 
-  # Tell GTK to actually use it
   dconf.settings = {
     "org/gnome/desktop/interface" = {
       gtk-theme = "Aesthetic-Night";
@@ -19,7 +17,6 @@
     };
   };
 
-  # Optional but recommended: ensure icons are dark-friendly
   gtk = {
     enable = true;
     iconTheme = {
@@ -28,11 +25,10 @@
     };
     theme = {
       name = "Aesthetic-Night";
-      package = pkgs.adw-gtk3; # fallback base theme; the runCommand above actually provides Aesthetic-Night
+      package = pkgs.adw-gtk3;
     };
   };
 
-  # Also create a GTK3 settings.ini with the button layout rxyhn used:
   xdg.configFile."gtk-3.0/settings.ini".text = ''
     [Settings]
     gtk-theme-name=Aesthetic-Night

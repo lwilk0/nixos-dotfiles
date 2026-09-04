@@ -1,8 +1,4 @@
 {pkgs, ...}: {
-  imports = [
-    ./aesthetic-night
-  ];
-
   home.pointerCursor = {
     gtk.enable = true;
     package = pkgs.bibata-cursors;

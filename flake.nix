@@ -1,5 +1,5 @@
 {
-  description = "System Flake";
+  description = "lwilko's System Flake";
 
   inputs = {
     # Nix PKGS
@@ -19,10 +19,10 @@
     # Hyprland
     hyprland = {
       url = "github:hyprwm/Hyprland/v0.46.0";
-      inputs.nixpkgs.follows = "nixpkgs"; # Keeps it building against 26.05
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     xdg-portal-hyprland = {
-      url = "github:hyprwm/xdg-desktop-portal-hyprland/v1.3.8"; # Pinned to match
+      url = "github:hyprwm/xdg-desktop-portal-hyprland/v1.3.8";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -36,6 +36,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Chaotic Nyx
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
   };
 
@@ -60,7 +61,6 @@
     nixosConfigurations = {
       nixos = lib.nixosSystem {
         inherit pkgs;
-        # Combined specialArgs (removed extraSpecialArgs)
         specialArgs = {
           inherit inputs;
           pkgs-unstable = import nixpkgs-unstable {
@@ -68,8 +68,8 @@
           };
         };
         modules = [
-          ./system/pc
-          ./modules
+          ./nixos/configuration
+          ./modules/nixos
           inputs.musnix.nixosModules.musnix
           chaotic.nixosModules.default
           {programs.appimage.binfmt = true;}
@@ -87,7 +87,7 @@
           };
         };
         modules = [
-          ./home/home.nix
+          ./home-manager/home.nix
           inputs.pkgs-local.homeManagerModules.appimages
           inputs.pkgs-local.homeManagerModules.deb
           caelestia-shell.homeManagerModules.default

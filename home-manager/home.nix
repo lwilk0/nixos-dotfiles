@@ -12,17 +12,7 @@
   '';
 in {
   imports = [
-    ./modules/hyprland
-    ./modules/quickshell
-    ./modules/kitty
-    ./modules/zsh
-    ./modules/fastfetch
-    ./modules/gtk
-    ./modules/git
-    ./modules/portal
-    ./modules/wireplumber
-    ./modules/qt
-    ./modules/librewolf-perf
+    ../modules/home-manager
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -82,12 +72,10 @@ in {
       wineWow64Packages.yabridge
       winetricks
 
-      # ── Neovim ───────────────────────────────────────────────────────────────
       neovim
       gcc
       tree-sitter
 
-      # ── Pro audio ────────────────────────────────────────────────────────────
       qjackctl
       carla
       alsa-utils
@@ -108,7 +96,6 @@ in {
         ];
       })
 
-      # Core libraries required by MT-PDK2
       libx11
       libxcb-util
       libxcb-cursor
@@ -121,7 +108,6 @@ in {
       libpng
       zlib
 
-      # ── Development ──────────────────────────────────────────────────────────
       rust-analyzer
       cargo
       rustfmt
@@ -134,8 +120,6 @@ in {
       gdb
       dbvisualizer
       jdk21
-      
-      # Formatters & Linters
       shfmt
       alejandra
       prettierd
@@ -144,34 +128,23 @@ in {
       pkgs-unstable.rustc
     ];
 
-  # ── direnv — automatic nix dev-shell loading ──────────────────────────────
-  # When you cd into ~/Projects/fmp (or any project with flake.nix / shell.nix
-  # and an .envrc), the correct nix environment activates automatically.
-  # nix-direnv caches the shell so it doesn't re-evaluate on every cd.
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
     enableZshIntegration = true;
   };
 
-  # ── Qt theming ───────────────────────────────────────────────────────────
   qt.enable = true;
 
-  # ── Session variables ────────────────────────────────────────────────────
   home.sessionVariables = {
     LV2_PATH = "$HOME/.lv2/lib/lv2";
-    # Tell Rust / cargo to use sccache if it is ever added; harmless if not.
-    # RUSTC_WRAPPER = "sccache";
   };
 
-  # ── NeoVim ────────────────────────────────────────────────────────────────
   xdg.configFile."nvim" = {
-    source = ./modules/nvim;
+    source = ../modules/home-manager/nvim;
     recursive = true;
   };
 
-  # ── Screenshots directory ─────────────────────────────────────────────────
-  # grimblast's "save" mode writes here by default.
   home.file."Pictures/Screenshots/.keep".text = "";
 
   fonts.fontconfig.enable = true;

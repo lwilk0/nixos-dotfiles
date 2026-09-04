@@ -1,5 +1,4 @@
 {pkgs, ...}: {
-  # ── WirePlumber user configuration ───────────────────────────────────────────
   xdg.configFile."wireplumber/wireplumber.conf.d/50-default-devices.conf".text = ''
     wireplumber.settings = {
       # Default OUTPUT → AirPods Pro
