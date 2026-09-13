@@ -15,7 +15,6 @@ let
       [ -d "$DOT_DIR/.git" ] || { echo "Not a git repo: $DOT_DIR"; exit 0; }
       cd "$DOT_DIR"
 
-      # Never stop in-progress git operations
       if [ -d .git/rebase-merge ] || [ -d .git/rebase-apply ]; then
         echo "Rebase in progress; skipping."; exit 0
       fi
@@ -26,14 +25,31 @@ let
 
       if [ "$CURRENT_BRANCH" != "$AUTO_BRANCH" ]; then
         echo "Currently on ''${CURRENT_BRANCH:-detached}; switching to $AUTO_BRANCH"
-        git stash push -u -m "autosync-stash-$(date +%s)" 2>/dev/null || true
+
+        STASHED=0
+        if ! git diff --quiet HEAD -- || [ -n "$(git ls-files --others --exclude-standard)" ]; then
+          if git stash push -u -m "autosync-stash-$(date +%s)"; then
+            STASHED=1
+          fi
+        fi
+
+        # Switch to / create the auto branch
         if git show-ref --verify --quiet "refs/heads/$AUTO_BRANCH"; then
           git checkout "$AUTO_BRANCH"
         else
           git checkout -b "$AUTO_BRANCH"
         fi
+
+        if [ "$STASHED" = "1" ]; then
+          if ! git stash pop; then
+            echo "Stash didn't apply cleanly on $AUTO_BRANCH."
+            echo "Recover manually: git stash list && git stash pop"
+            exit 1
+          fi
+        fi
       fi
 
+      # Distinguish auto-commits from manual ones in `git log`
       export GIT_AUTHOR_NAME="${cfg.authorName}"
       export GIT_AUTHOR_EMAIL="${cfg.authorEmail}"
       export GIT_COMMITTER_NAME="$GIT_AUTHOR_NAME"
@@ -60,7 +76,7 @@ let
   };
 in {
   options.services.dotfilesAutosync = {
-    enable = lib.mkEnableOption "automatic dotfiles sync to a side branch";
+    enable = lib.mkEnableOption "automatic dotfiles sync to a side branch (never touches master)";
 
     branch = lib.mkOption {
       type = lib.types.str;
@@ -78,10 +94,7 @@ in {
       type = lib.types.str;
       default = "2h";
       example = "30min";
-      description = ''
-        systemd OnUnitActiveSec value (runs this long after the last activation).
-        Use "2h" for hours, "30min" for minutes etc.
-      '';
+      description = "systemd OnUnitActiveSec value (runs this long after the last activation).";
     };
 
     startBootSec = lib.mkOption {
@@ -93,7 +106,7 @@ in {
     authorName = lib.mkOption {
       type = lib.types.str;
       default = "dotfiles-autosync";
-      description = "Git author identity for auto-commits (so you can filter them).";
+      description = "Git author identity for auto-commits (so you can filter them in log).";
     };
 
     authorEmail = lib.mkOption {
@@ -108,21 +121,19 @@ in {
       Unit.Description = "Auto-sync dotfiles to side branch";
       Install.WantedBy = [ "timers.target" ];
       Timer = {
-        OnBootSec      = cfg.startBootSec;
-        OnUnitActiveSec = cfg.interval;
-        Unit           = "dotfiles-autosync.service";
+        OnBootSec        = cfg.startBootSec;
+        OnUnitActiveSec  = cfg.interval;
+        Unit             = "dotfiles-autosync.service";
+        # Catch up if the timer was missed while asleep / powered off
         Persistent = true;
       };
     };
 
     systemd.user.services.dotfiles-autosync = {
-      Unit = {
-        Description = "Auto-sync dotfiles to side branch";
-        RefuseManualStart = false;
-      };
+      Unit.Description = "Auto-sync dotfiles to side branch";
       Service = {
         Type = "oneshot";
-        ExecStart = "${syncScript}/bin/dotfiles-autosync";
+        ExecStart = lib.getExe syncScript;
       };
     };
   };
