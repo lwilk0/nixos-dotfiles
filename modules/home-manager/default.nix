@@ -9,6 +9,7 @@
     ./gtk.nix
     ./kitty.nix
     ./librewolf-perf.nix
+    ./nixvim.nix
     ./portal.nix
     ./qt.nix
     ./quickshell.nix

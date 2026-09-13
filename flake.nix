@@ -38,6 +38,8 @@
 
     # Chaotic Nyx
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+
+    nixvim.url = "github:nix-community/nixvim";
   };
 
   outputs = {
@@ -49,6 +51,7 @@
     xdg-portal-hyprland,
     caelestia-shell,
     chaotic,
+    nixvim,
     ...
   } @ inputs: let
     lib = nixpkgs.lib;
@@ -91,6 +94,7 @@
           inputs.pkgs-local.homeManagerModules.appimages
           inputs.pkgs-local.homeManagerModules.deb
           caelestia-shell.homeManagerModules.default
+          nixvim.homeManagerModules.nixvim
         ];
       };
     };

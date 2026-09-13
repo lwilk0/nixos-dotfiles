@@ -67,14 +67,9 @@ in {
       lazygit
       dxvk
       gpgme
-
       wineWow64Packages.yabridge
       winetricks
-
-      neovim
       gcc
-      tree-sitter
-
       qjackctl
       carla
       alsa-utils
@@ -139,10 +134,6 @@ in {
     LV2_PATH = "$HOME/.lv2/lib/lv2";
   };
 
-  xdg.configFile."nvim" = {
-    source = ../modules/home-manager/nvim;
-    recursive = true;
-  };
 
   home.file."Pictures/Screenshots/.keep".text = "";
 
