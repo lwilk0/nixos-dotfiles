@@ -1,10 +1,7 @@
 {pkgs, ...}: {
   security.rtkit.enable = true;
 
-  services.power-profiles-daemon.enable = true;
-
   boot.kernelParams = [
-    "threadirqs" # each IRQ gets its own kernel thread → better PREEMPT_RT behaviour
     "preempt=full" # full kernel preemption — lowest scheduling latency
     "intel_pstate=active" # Intel P-state in HWP mode; pairs with performance governor
   ];

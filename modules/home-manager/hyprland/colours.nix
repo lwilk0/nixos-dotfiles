@@ -1,9 +1,5 @@
 {...}: {
   xdg.configFile."hypr/scheme/default.lua".text = ''
-
-        background = "rgb(061115)"
-        onBackground = "rgb(d9d7d6)"
-
     background = "rgb(061115)"
     onBackground = "rgb(d9d7d6)"
 

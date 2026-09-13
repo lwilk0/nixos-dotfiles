@@ -15,7 +15,6 @@ fi
 
 CURRENT_MODE=$(cat "$MODE_FILE")
 
-# If called with "switch", cycle to the next mode
 if [ "$1" == "switch" ]; then
   case "$CURRENT_MODE" in
   media) echo "workspace" >"$MODE_FILE" ;;
@@ -29,8 +28,6 @@ fi
 
 ACTION=$1
 
-# --- Helper function to toggle B0 Control Change messages ---
-# Arguments: $1 = button_name (for state file), $2 = CC_number (hex)
 toggle_midi() {
   local btn="$1"
   local cc="$2"
@@ -43,20 +40,16 @@ toggle_midi() {
   fi
 
   if [ "$current_state" == "0" ]; then
-    # Was OFF, send ON (Value 7F)
-    # Syntax: B0 (CC Ch1) + CC Number + 7F (127)
     amidi -p "$MIDI_PORT" -S "B0 $cc 7F"
     echo "1" >"$state_file"
   else
-    # Was ON, send OFF (Value 00)
-    # Syntax: B0 (CC Ch1) + CC Number + 00 (0)
     amidi -p "$MIDI_PORT" -S "B0 $cc 00"
     echo "0" >"$state_file"
   fi
 }
 
 nux_step() {
-  local step="$1"  # e.g. 5%+ or 10%-
+  local step="$1"
   local id
   id="$(wpctl status | awk '/^ *[0-9]+\\. alsa_output\\.usb-NUX_NUX_NGA-3BT_.*\\.analog-stereo/ {print $1; exit}')"
   [ -n "$id" ] || { echo "NUX sink not found"; return 1; }
@@ -115,7 +108,7 @@ midi)
   #up) amidi -p "$MIDI_PORT" -S "B0 01 7F" ;;
   #down) amidi -p "$MIDI_PORT" -S "B0 01 00" ;;
   up) nux_step 5%+ ;;
-  up) nux_step 5%- ;;
+  down) nux_step 5%- ;;
   esac
   ;;
 esac

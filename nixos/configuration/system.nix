@@ -11,7 +11,7 @@
 
   boot.tmp = {
     useTmpfs = true;
-    tmpfsSize = "20%";
+    tmpfsSize = "50%";
   };
 
   boot.kernelPackages = pkgs.linuxPackages_cachyos-lto;
@@ -19,7 +19,7 @@
 
   boot.kernelParams = [
     "mitigations=off"
-    "swapaccount=1"
+    "spec_store_bypass_disable_on_tsx=on"
     "btusb.enable_autosuspend=0"
     "intel_iommu=on"
     "iommu=pt"
@@ -27,8 +27,8 @@
 
   services.udev.extraRules = ''
     ACTION=="add|change", KERNEL=="nvme[0-9]*", ATTR{queue/scheduler}="none"
-    ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", ATTR{queue/scheduler}="bfq"
     ACTION=="add|change", KERNEL=="nvme[0-9]*", ATTR{queue/read_ahead_kb}="128"
+    ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", ATTR{queue/scheduler}="bfq"
     ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", ATTR{queue/read_ahead_kb}="2048"
   '';
 
@@ -42,7 +42,6 @@
     libva
     libvpx
     vulkan-tools
-    dxvk
   ];
 
   hardware.graphics = {
@@ -64,11 +63,15 @@
     "vm.swappiness" = lib.mkForce 180; # 180 is the recommended value for ZRAM by systemd devs
     "vm.watermark_boost_factor" = 125;
     "vm.watermark_scale_factor" = 125;
+    "vm.page-cluster" = 0;
   };
 
   swapDevices = [];
   zramSwap = {
     enable = true;
+    algorithm = "zstd";
+    memoryPercent = 50;
+    priority = 100;
   };
 
   nix.gc = {
@@ -115,13 +118,16 @@
     };
   };
 
+  nix.daemonCPUSchedPolicy = "idle";
+  nix.daemonIOSchedClass = "idle";
+
   nix.settings = {
     experimental-features = ["nix-command" "flakes"];
     max-jobs = "auto";
     cores = 0;
     auto-optimise-store = true; # Hardlinks identical files, saves space and speeds up I/O
     http-connections = 50; 
-    download-buffer-size = 524288000; # 500MB buffer
+    download-buffer-size = 134217728;
     system-features = [
       "nixos-test"
       "benchmark"
@@ -129,6 +135,8 @@
       "kvm"
       "gccarch-x86-64-v3"
     ];
+    sandbox = true;
+    extra-platforms = ["aarch64-linux"];
   };
 
   systemd.settings.Manager = {

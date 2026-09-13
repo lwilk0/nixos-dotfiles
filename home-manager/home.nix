@@ -51,7 +51,6 @@ in {
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-cjk-serif
-      pkgs.nerd-fonts.jetbrains-mono
       appimage-run
       xwayland-satellite
       postman
@@ -156,5 +155,15 @@ in {
     settings = {
       experimental-features = ["nix-command" "flakes"];
     };
+  };
+
+  services.dotfilesAutosync = {
+    enable = true;
+    branch = "auto-sync";
+    remote = "origin";
+    interval = "2h";
+    startBootSec = "5min";
+    authorName  = "dotfiles-autosync";
+    authorEmail = "autosync@wilko.local";
   };
 }

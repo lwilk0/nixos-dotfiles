@@ -1,10 +1,8 @@
-{ pkgs, ... }:
-
-{
-  services.pcscd.enable = true;
+{ pkgs, ... }: {
   programs.gnupg.agent = {
     enable = true;
-    pinentryPackage = pkgs.pinentry-curses;
     enableSSHSupport = true;
+    pinentryPackage = pkgs.pinentry-qt;
   };
+  environment.systemPackages = [ pkgs.gnupg ];
 }
