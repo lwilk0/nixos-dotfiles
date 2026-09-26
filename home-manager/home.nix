@@ -139,11 +139,6 @@ in {
     LV2_PATH = "$HOME/.lv2/lib/lv2";
   };
 
-  xdg.configFile."nvim" = {
-    source = ../modules/home-manager/nvim;
-    recursive = true;
-  };
-
   home.file."Pictures/Screenshots/.keep".text = "";
 
   fonts.fontconfig.enable = true;

@@ -125,7 +125,7 @@
     experimental-features = ["nix-command" "flakes"];
     max-jobs = "auto";
     cores = 0;
-    auto-optimise-store = true; # Hardlinks identical files, saves space and speeds up I/O
+    auto-optimise-store = true; # Hardlinks identical files
     http-connections = 50; 
     download-buffer-size = 134217728;
     system-features = [
