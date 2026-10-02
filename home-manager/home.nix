@@ -71,7 +71,6 @@ in {
       wineWow64Packages.yabridge
       winetricks
 
-      neovim
       gcc
       tree-sitter
 
@@ -152,6 +151,7 @@ in {
     };
   };
 
+  /*
   services.dotfilesAutosync = {
     enable = true;
     branch = "auto-sync";
@@ -160,5 +160,5 @@ in {
     startBootSec = "5min";
     authorName  = "dotfiles-autosync";
     authorEmail = "autosync@wilko.local";
-  };
+  };*/
 }

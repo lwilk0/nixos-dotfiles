@@ -14,5 +14,6 @@
     ./quickshell.nix
     ./zsh.nix
     ./hyprland
+    ./nixvim.nix
   ];
 }
