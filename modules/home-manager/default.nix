@@ -1,5 +1,4 @@
-{ ... }:
-{
+{...}: {
   imports = [
     ./aesthetic-night.nix
     ./caelestia.nix

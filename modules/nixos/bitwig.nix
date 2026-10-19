@@ -1,8 +1,7 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   programs.nix-ld.enable = true;
   environment.variables.NIX_PROFILES = "$HOME/.nix-profile";
-  
+
   # Ensure the dummy libjack2 is completely gone from nix-ld
   programs.nix-ld.libraries = with pkgs; [
     alsa-lib

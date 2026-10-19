@@ -1,24 +1,32 @@
 {
+  config,
+  lib,
   pkgs,
   pkgs-unstable,
   inputs,
+  localPkgsPath ? null,
   ...
 }: let
   caelestia-cli = inputs.caelestia-cli.packages."x86_64-linux".default;
-  hydra = pkgs.callPackage /home/wilko/.local/pkgs/appimages/default.nix {};
   yazi-themed = pkgs.writeShellScriptBin "yazi-themed" ''
     cat ~/.local/state/caelestia/sequences.txt 2> /dev/null
     exec ${pkgs.yazi}/bin/yazi "$@"
   '';
 in {
-  imports = [
-    ../modules/home-manager
-  ];
+  imports =
+    [
+      ../modules/home-manager
+      ./hosts/nixos/hyprland.nix
+    ]
+    ++ lib.optionals (localPkgsPath != null && builtins.pathExists localPkgsPath) [
+      "${localPkgsPath}/appimages/default.nix"
+      "${localPkgsPath}/deb/default.nix"
+    ];
 
   nixpkgs.config.allowUnfree = true;
 
   home.username = "wilko";
-  home.homeDirectory = "/home/wilko";
+  home.homeDirectory = "/home/${config.home.username}";
   home.stateVersion = "26.05";
 
   home.packages = with pkgs;
@@ -67,6 +75,7 @@ in {
       lazygit
       dxvk
       gpgme
+      codex
       cdrdao
       dvdplusrwtools
 
@@ -153,6 +162,8 @@ in {
     };
   };
 
+  programs.hermes-agent.enable = true;
+
   /*
   services.dotfilesAutosync = {
     enable = true;
@@ -162,5 +173,6 @@ in {
     startBootSec = "5min";
     authorName  = "dotfiles-autosync";
     authorEmail = "autosync@wilko.local";
-  };*/
+  };
+  */
 }

@@ -16,7 +16,6 @@
       ".." = "cd ..";
       "..." = "cd ../..";
 
-
       up = "home-manager switch --flake $HOME/.dotfiles";
       nos = "sudo nixos-rebuild switch --flake $HOME/.dotfiles#nixos";
       nost = "sudo nixos-rebuild test --flake $HOME/.dotfiles#nixos";

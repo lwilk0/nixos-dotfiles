@@ -18,7 +18,6 @@
   #boot.kernelPackages = pkgs.linuxPackages;
 
   boot.kernelParams = [
-    "mitigations=off"
     "spec_store_bypass_disable_on_tsx=on"
     "btusb.enable_autosuspend=0"
     "intel_iommu=on"
@@ -113,7 +112,7 @@
         renice = 10;
       };
       cpu = {
-        park_cores = "no"; 
+        park_cores = "no";
       };
     };
   };
@@ -126,7 +125,7 @@
     max-jobs = "auto";
     cores = 0;
     auto-optimise-store = true; # Hardlinks identical files
-    http-connections = 50; 
+    http-connections = 50;
     download-buffer-size = 134217728;
     system-features = [
       "nixos-test"

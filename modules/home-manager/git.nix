@@ -1,5 +1,8 @@
-{ config, pkgs, ... }:
 {
+  config,
+  pkgs,
+  ...
+}: {
   programs.git = {
     enable = true;
     package = pkgs.gitFull;
@@ -8,5 +11,5 @@
       name = "Luke Wilkinson";
       email = "wilkinsonluke@proton.me";
     };
-  }; 
+  };
 }

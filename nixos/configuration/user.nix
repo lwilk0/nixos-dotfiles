@@ -3,8 +3,8 @@
 
   users.users.wilko = {
     isNormalUser = true;
-    autoSubUidGidRange = true; 
-    extraGroups = ["wheel" "wireshark" "adbusers" "snd-virmidi" "audio" "realtime" "network" "networkmanager" "libvirtd" "cdrom" "dialout" "input" ]; # Enable ‘sudo’ for the user.
+    autoSubUidGidRange = true;
+    extraGroups = ["wheel" "wireshark" "adbusers" "snd-virmidi" "audio" "realtime" "network" "networkmanager" "libvirtd" "cdrom" "dialout" "input"]; # Enable ‘sudo’ for the user.
   };
 
   security.pam.loginLimits = [
@@ -36,5 +36,4 @@
   services.udev.extraRules = ''
     KERNEL=="hidraw*", ATTRS{idVendor}=="320f", ATTRS{idProduct}=="505b", MODE="0660", GROUP="input"
   '';
-
 }

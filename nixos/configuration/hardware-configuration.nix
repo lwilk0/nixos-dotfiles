@@ -26,7 +26,7 @@
     fsType = "vfat";
     options = ["fmask=0077" "dmask=0077"];
   };
- 
+
   fileSystems."/run/media/wilko/700" = {
     device = "/dev/disk/by-uuid/bf5b0b57-5fa0-4b1c-8b42-5c95df85b408";
     fsType = "ext4";

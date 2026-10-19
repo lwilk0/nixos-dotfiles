@@ -1,17 +1,13 @@
-{...}: {
-  xdg.configFile."hypr/monitors.lua".text = ''
-    hl.monitor({
-      output = "HDMI-A-6",
-      mode = "1920x1080@75",
-      position = "0x0",
-      scale = "1",
-    })
+{
+  config,
+  lib,
+  ...
+}: {
+  options.dotfiles.hyprland.monitorsLua = lib.mkOption {
+    type = lib.types.lines;
+    default = "";
+    description = "Host-specific Hyprland monitor declarations.";
+  };
 
-    hl.monitor({
-      output = "DP-1",
-      mode = "1920x1080@60",
-      position = "1920x0",
-      scale = "1",
-    })
-  '';
+  config.xdg.configFile."hypr/monitors.lua".text = config.dotfiles.hyprland.monitorsLua;
 }

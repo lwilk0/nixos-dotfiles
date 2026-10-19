@@ -1,8 +1,10 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   services.gnome-keyring = {
-    components = [ "pkcs11" "secrets" "ssh" ];
+    components = ["pkcs11" "secrets" "ssh"];
   };
 
   xdg.portal = {

@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   programs.direnv = {
     enable = true;
 
@@ -88,7 +87,7 @@
           {}
         ];
       };
-      
+
       cord = {
         enable = true;
 
@@ -156,9 +155,9 @@
           };
 
           sources = [
-            { name = "nvim_lsp"; }
-            { name = "path"; }
-            { name = "buffer"; }
+            {name = "nvim_lsp";}
+            {name = "path";}
+            {name = "buffer";}
           ];
         };
       };
@@ -204,7 +203,7 @@
       # Rust debugging
       vscode-extensions.vadimcn.vscode-lldb.adapter
     ];
-    
+
     extraConfigLua = ''
       local map = vim.keymap.set
 

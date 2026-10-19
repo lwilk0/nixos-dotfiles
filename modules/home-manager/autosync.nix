@@ -1,10 +1,14 @@
-{ lib, pkgs, config, ... }:
-let
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}: let
   cfg = config.services.dotfilesAutosync;
 
   syncScript = pkgs.writeShellApplication {
     name = "dotfiles-autosync";
-    runtimeInputs = with pkgs; [ git coreutils openssh ];
+    runtimeInputs = with pkgs; [git coreutils openssh];
     text = ''
       set -uo pipefail
 
@@ -119,11 +123,11 @@ in {
   config = lib.mkIf cfg.enable {
     systemd.user.timers.dotfiles-autosync = {
       Unit.Description = "Auto-sync dotfiles to side branch";
-      Install.WantedBy = [ "timers.target" ];
+      Install.WantedBy = ["timers.target"];
       Timer = {
-        OnBootSec        = cfg.startBootSec;
-        OnUnitActiveSec  = cfg.interval;
-        Unit             = "dotfiles-autosync.service";
+        OnBootSec = cfg.startBootSec;
+        OnUnitActiveSec = cfg.interval;
+        Unit = "dotfiles-autosync.service";
         # Catch up if the timer was missed while asleep / powered off
         Persistent = true;
       };
