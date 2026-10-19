@@ -67,6 +67,8 @@ in {
       lazygit
       dxvk
       gpgme
+      cdrdao
+      dvdplusrwtools
 
       wineWow64Packages.yabridge
       winetricks

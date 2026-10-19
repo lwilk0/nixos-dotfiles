@@ -9,5 +9,6 @@
     ./podman.nix
     ./nix-ld.nix
     ./librewolf.nix
+    ./openrgb.nix
   ];
 }

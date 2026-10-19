@@ -4,7 +4,7 @@
   users.users.wilko = {
     isNormalUser = true;
     autoSubUidGidRange = true; 
-    extraGroups = ["wheel" "wireshark" "adbusers" "snd-virmidi" "audio" "realtime" "network" "networkmanager" "libvirtd" "cdrom" "dialout"]; # Enable ‘sudo’ for the user.
+    extraGroups = ["wheel" "wireshark" "adbusers" "snd-virmidi" "audio" "realtime" "network" "networkmanager" "libvirtd" "cdrom" "dialout" "input" ]; # Enable ‘sudo’ for the user.
   };
 
   security.pam.loginLimits = [
@@ -32,4 +32,9 @@
   systemd.services.NetworkManager-wait-online.enable = false;
 
   systemd.tmpfiles.rules = ["L+ /usr/bin/true - - - - /run/current-system/sw/bin/true"];
+
+  services.udev.extraRules = ''
+    KERNEL=="hidraw*", ATTRS{idVendor}=="320f", ATTRS{idProduct}=="505b", MODE="0660", GROUP="input"
+  '';
+
 }

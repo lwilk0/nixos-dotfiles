@@ -8,7 +8,10 @@
 
     pkgs-local.url = "path:/home/wilko/.local/pkgs";
 
-    musnix = {url = "github:musnix/musnix/a84602f";};
+    musnix = {
+      url = "github:musnix/musnix/a84602f";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Home Manager
     home-manager = {
@@ -18,28 +21,33 @@
 
     # Hyprland
     hyprland = {
-      url = "github:hyprwm/Hyprland/v0.46.0";
+      url = "github:hyprwm/Hyprland/v0.56.2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     xdg-portal-hyprland = {
-      url = "github:hyprwm/xdg-desktop-portal-hyprland/v1.3.8";
+      url = "github:hyprwm/xdg-desktop-portal-hyprland/v1.4.1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Caelestia
     caelestia-shell = {
       url = "github:caelestia-dots/shell";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     caelestia-cli = {
       url = "github:caelestia-dots/cli";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Chaotic Nyx
-    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+    chaotic = {
+      url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    nixvim.url = "github:nix-community/nixvim";
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -71,9 +79,9 @@
           };
         };
         modules = [
+          inputs.musnix.nixosModules.musnix
           ./nixos/configuration
           ./modules/nixos
-          inputs.musnix.nixosModules.musnix
           chaotic.nixosModules.default
           {programs.appimage.binfmt = true;}
         ];
