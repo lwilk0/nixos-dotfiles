@@ -14,9 +14,6 @@
     tmpfsSize = "50%";
   };
 
-  boot.kernelPackages = pkgs.linuxPackages_cachyos-lto;
-  #boot.kernelPackages = pkgs.linuxPackages;
-
   boot.kernelParams = [
     "spec_store_bypass_disable_on_tsx=on"
     "btusb.enable_autosuspend=0"

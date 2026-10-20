@@ -1,9 +1,9 @@
 {...}: {
   programs.caelestia.settings = {
     services = {
-      useFahrenheit = false;
-      useFahrenheitPerformance = false;
-      useTwelveHourClock = false;
+      sensorUnits = "Celsius";
+      weatherUnits = "Celsius";
+      clockFormat = "TwentyFourHour";
     };
 
     border.rounding = 15;
@@ -21,6 +21,11 @@
       activeWindow.compact = true;
       clock.showIcon = false;
       status.showBattery = true;
+    };
+
+    systemd = {
+      enable = false;
+      target = "graphical-session.target";
     };
   };
 }

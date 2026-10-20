@@ -37,7 +37,6 @@ in {
     fd
     lazygit
     gpgme
-    codex
     gcc
     tree-sitter
     rust-analyzer

@@ -7,5 +7,6 @@
     ../network.nix
     ../hardware-configuration.nix
     ../low_latency.nix
+    ./kernel.nix
   ];
 }
