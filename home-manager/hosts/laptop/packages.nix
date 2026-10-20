@@ -10,8 +10,7 @@
     cat ~/.local/state/caelestia/sequences.txt 2> /dev/null
     exec ${pkgs.yazi}/bin/yazi "$@"
   '';
-in {
-  # This list replaces the PC package list in home.nix. Edit it independently.
+in {  
   home.packages = with pkgs; [
     yazi-themed
     caelestia-cli
