@@ -53,5 +53,6 @@ in {
     alejandra
     prettierd
     pkgs-unstable.rustc
+    git
   ]);
 }
