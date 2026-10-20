@@ -22,10 +22,5 @@
       clock.showIcon = false;
       status.showBattery = true;
     };
-
-    systemd = {
-      enable = false;
-      target = "graphical-session.target";
-    };
   };
 }
