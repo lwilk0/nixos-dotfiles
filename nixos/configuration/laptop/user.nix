@@ -8,6 +8,8 @@
   networking.hostName = "laptop";
   time.timeZone = "Europe/London";
 
+  networking.networkmanager.enable = true;
+
   systemd.services.NetworkManager-wait-online.enable = false;
   systemd.tmpfiles.rules = ["L+ /usr/bin/true - - - - /run/current-system/sw/bin/true"];
 }
