@@ -12,7 +12,7 @@
   '';
 in {
   # This list replaces the PC package list in home.nix. Edit it independently.
-  home.packages = lib.mkForce (with pkgs; [
+  home.packages = with pkgs; [
     yazi-themed
     caelestia-cli
     btop
@@ -54,5 +54,5 @@ in {
     prettierd
     pkgs-unstable.rustc
     git
-  ]);
+  ];
 }
