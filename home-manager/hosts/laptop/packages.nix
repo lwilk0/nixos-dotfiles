@@ -53,4 +53,6 @@ in {
     prettierd
     pkgs-unstable.rustc
   ];
+
+  programs.dconf.enable = true;
 }
