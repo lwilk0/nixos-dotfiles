@@ -19,6 +19,7 @@
       up = "home-manager switch --flake $HOME/.dotfiles";
       uplaptop = "home-manager switch --flake $HOME/.dotfiles#wilko-laptop";
       nos = "sudo nixos-rebuild switch --flake $HOME/.dotfiles#nixos";
+      noslaptop = "sudo nixos-rebuild switch --flake $HOME/.dotfiles#nixos-laptop";
       nost = "sudo nixos-rebuild test --flake $HOME/.dotfiles#nixos";
       dots = "cd $HOME/.dotfiles";
       ndiff = "nix store diff-closures /run/current-system $(ls -d /nix/var/nix/profiles/system-* | tail -2 | head -1)";

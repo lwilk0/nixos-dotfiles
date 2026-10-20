@@ -102,6 +102,25 @@
       };
     };
 
+    nixosConfigurations = {
+      nixos-laptop = lib.nixosSystem {
+        inherit pkgs;
+        specialArgs = {
+          inherit inputs;
+          pkgs-unstable = import nixpkgs-unstable {
+            inherit system;
+          };
+        };
+        modules = [
+          inputs.musnix.nixosModules.musnix
+          ./nixos/configuration/laptop
+          ./modules/nixos
+          chaotic.nixosModules.default
+          {programs.appimage.binfmt = true;}
+        ];
+      };
+    };
+
     homeConfigurations = {
       wilko = mkHome ./home-manager/hosts/nixos;
       wilko-laptop = mkHome ./home-manager/hosts/laptop;
