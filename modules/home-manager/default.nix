@@ -10,7 +10,6 @@
     ./librewolf-perf.nix
     ./portal.nix
     ./qt.nix
-    ./quickshell.nix
     ./zsh.nix
     ./hyprland
     ./nixvim.nix

@@ -40,7 +40,7 @@
       export LD_PRELOAD="${pkgs.pipewire.jack}/lib/libjack.so''${LD_PRELOAD:+:}$LD_PRELOAD"
 
       # 3. Execute the actual Bitwig internal script directly, skipping the broken Nix wrapper
-      exec "/nix/store/mfn36yqbs2grp35rn08bsc2jkb4z2sgw-bitwig-studio-6.0/opt/bitwig-studio/bitwig-studio" "$@"
+      exec "${pkgs.bitwig-studio}/libexec/bitwig-studio/bitwig-studio" "$@"
     '')
   ];
 }

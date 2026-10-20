@@ -79,10 +79,15 @@
     options = "--max-free 2G";
   };
 
-  fileSystems."/".options = lib.mkForce [
-    "noatime"
-    "discard"
-  ];
+  nix.settings.auto-optimise-store = true;
+  nix.optimise = {
+    automatic = true;
+    dates = [ "weekly" ];
+  };
+
+  fileSystems."/".options = lib.mkForce [ "noatime" ];
+  services.fstrim.enable = true;
+ 
 
   services.printing.enable = false;
   services.openssh.enable = false;
@@ -124,7 +129,6 @@
     experimental-features = ["nix-command" "flakes"];
     max-jobs = "auto";
     cores = 0;
-    auto-optimise-store = true; # Hardlinks identical files
     http-connections = 50;
     download-buffer-size = 134217728;
     system-features = [

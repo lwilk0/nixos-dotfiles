@@ -17,6 +17,7 @@
       "..." = "cd ../..";
 
       up = "home-manager switch --flake $HOME/.dotfiles";
+      uplaptop = "home-manager switch --flake $HOME/.dotfiles#wilko-laptop";
       nos = "sudo nixos-rebuild switch --flake $HOME/.dotfiles#nixos";
       nost = "sudo nixos-rebuild test --flake $HOME/.dotfiles#nixos";
       dots = "cd $HOME/.dotfiles";
@@ -55,9 +56,6 @@
       jlsp = "pw-jack jack_lsp -c";
       pwnodes = "pw-cli list-objects Node | grep 'node.name'";
       sinks = "wpctl status | grep -A20 'Sinks:'";
-      airpods = ''wpctl set-default $(wpctl status | awk '/AirPods Pro/{gsub(/\./,""); print $2}' | head -1)'';
-      aux = ''wpctl set-default $(wpctl status | awk '/Built-in Audio Analog Stereo.*Sink/{gsub(/\./,""); print $2}' | head -1)'';
-
       cpu = "cat /proc/cpuinfo | grep 'model name' | head -1";
       temps = "cat /sys/class/hwmon/hwmon*/temp1_input 2>/dev/null | awk '{print $1/1000 \"°C\"}'";
       memf = "free -h";

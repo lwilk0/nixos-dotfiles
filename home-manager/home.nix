@@ -16,7 +16,6 @@ in {
   imports =
     [
       ../modules/home-manager
-      ./hosts/nixos/hyprland.nix
     ]
     ++ lib.optionals (localPkgsPath != null && builtins.pathExists localPkgsPath) [
       "${localPkgsPath}/appimages/default.nix"
@@ -161,8 +160,6 @@ in {
       experimental-features = ["nix-command" "flakes"];
     };
   };
-
-  programs.hermes-agent.enable = true;
 
   /*
   services.dotfilesAutosync = {

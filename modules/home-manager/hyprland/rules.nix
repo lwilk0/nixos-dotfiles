@@ -1,36 +1,40 @@
 {...}: {
   xdg.configFile."hypr/rules.lua".text = ''
-    -- ── Picture-in-Picture ────────────────────────────────────────────────
     hl.window_rule({
         match = { title = ".*Picture-in.*" },
         size = {640, 360},
     })
 
-    -- ══════════════════════════════════════════════════════════════════════
-    -- GAMING — TEARING & PERFORMANCE
-    -- ══════════════════════════════════════════════════════════════════════
     hl.window_rule({
+      name = "code",
+      match = { class = "codium|code" },
+      workspace = "4",
+    })
+
+    hl.window_rule({
+      name = "audio",
+      match = { class = "bitwig-studio|com.bitwig.BitwigStudio|Carla|qjackctl|org.helvum.Helvum|org.rncbc.qpwgraph|Ardour|REAPER|jalv.*" },
+      workspace = "3",
+    })
+
+    hl.window_rule({
+      name = "steam-games",
       match = { class = "(steam_app_).*" },
       immediate = true,
+      workspace = "4",
     })
     hl.window_rule({
+      name = "gamescope",
       match = { class = "gamescope" },
       immediate = true,
+      workspace = "4",
     })
-    hl.window_rule({
-      match = { fullscreen = true },
-      immediate = true,
-    })
-    --hl.window_rule({
-    --  workspace = 4
-    --  class = "(steam_app_).*",
-    --})
 
-    -- ══════════════════════════════════════════════════════════════════════
-    -- KITTY — TERMINAL TRANSPARENCY
-    -- ══════════════════════════════════════════════════════════════════════
+    
     hl.window_rule({
-      match   = { class = "kitty" },
+      name = "kitty-default",
+      match = { class = "kitty" },
+      float = false,
       opacity = "0.86 override 0.8 override 0.8 override",
     })
 
@@ -38,17 +42,20 @@
       match   = { class = "codium" },
       opacity = "0.86 override 0.8 override 0.8 override",
     })
-    -- ══════════════════════════════════════════════════════════════════════
-    -- AUDIO APPS — NO IDLE INHIBIT
-    -- ══════════════════════════════════════════════════════════════════════
+
+    hl.window_rule({
+      name = "keybind-help",
+      match = { class = "keybind-help" },
+      float = true,
+      center = true,
+      size = {900, 680},
+    })
+
     hl.window_rule({
       match = { class = "bitwig-studio|com.bitwig.BitwigStudio" },
       suppress_event = "maximize",
     })
 
-    -- ══════════════════════════════════════════════════════════════════════
-    -- MISCELLANEOUS
-    -- ══════════════════════════════════════════════════════════════════════
     hl.window_rule({
       match = { class = "yabridge-host.exe" },
       float = true,

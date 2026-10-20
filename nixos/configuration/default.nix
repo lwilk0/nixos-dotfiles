@@ -1,14 +1,4 @@
 {...}: {
-  imports = [
-    ./bluetooth.nix
-    ./user.nix
-    ./pipewire.nix
-    ./bootloader.nix
-    ./dm.nix
-    ./zsh.nix
-    ./system.nix
-    ./network.nix
-    ./hardware-configuration.nix
-    ./low_latency.nix
-  ];
+  # Compatibility entry point for existing commands and external references.
+  imports = [./pc];
 }

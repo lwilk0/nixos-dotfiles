@@ -1,12 +1,11 @@
-{pkgs, ...}: {
-  # Copy GTK3 theme so it’s available to GTK apps
-  home.packages = with pkgs; [
-    (pkgs.runCommandLocal "aesthetic-night-gtk3-theme" {} ''
-      mkdir -p $out/share/themes/Aesthetic-Night
-      cp -r ${../../home-manager/themes/aesthetic-night/gtk3}/* $out/share/themes/Aesthetic-Night/
-    '')
-  ];
-
+{pkgs, ...}: let
+ # Install the copied theme as a package so Home Manager points at the right theme.
+ aestheticNightGtk3 = pkgs.runCommandLocal "aesthetic-night-gtk3-theme" {} ''
+  mkdir -p $out/share/themes/Aesthetic-Night
+  cp -r ${../../home-manager/themes/aesthetic-night/gtk3}/* $out/share/themes/Aesthetic-Night/
+ '';
+in {
+  home.packages = [ aestheticNightGtk3 ];
   xdg.configFile."gtk-4.0/gtk.css".source = ../../home-manager/themes/aesthetic-night/gtk4/gtk.css;
   xdg.configFile."gtk-4.0/assets".source = ../../home-manager/themes/aesthetic-night/gtk4/assets;
 
@@ -25,7 +24,7 @@
     };
     theme = {
       name = "Aesthetic-Night";
-      package = pkgs.adw-gtk3;
+      package = aestheticNightGtk3;
     };
   };
 

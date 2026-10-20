@@ -37,4 +37,18 @@
       hl.env("XCURSOR_SIZE", "11")
     '';
   };
+
+  systemd.user.services.discord = {
+    Unit = {
+      Description = "Discord (minimized)";
+      After = ["graphical-session.target"];
+      PartOf = ["graphical-session.target"];
+    };
+    Service = {
+      ExecStart = "discord --start-minimized";
+      Restart = "on-failure";
+      RestartSec = "5s";
+    };
+    Install.WantedBy = ["graphical-session.target"];
+  };
 }

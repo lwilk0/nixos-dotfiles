@@ -1,16 +1,15 @@
 {lib, ...}: {
   xdg.configFile."hypr/binds.lua".text = ''
-
-
     local mod = "SUPER"
     local modShift = "SUPER + SHIFT"
     local modControl = "SUPER + CTRL"
 
     local terminal = "kitty"
     local fileManager = "kitty -- yazi-themed"
-    local browser = "librewolf-perf"
-    local launcher = "caelestia shell drawers toggle launcher"
-    local screenshot = "grimblast"
+      local browser = "librewolf-perf"
+      local launcher = "caelestia shell drawers toggle launcher"
+      local screenshot = "grimblast"
+      local keybindHelp = "kitty --class keybind-help --title Keybindings sh -c 'bat --plain --paging=always \"$HOME/.config/hypr/keybindings.md\"'"
 
       -- ── Regular binds (fire on press) ──────────────────────────────────────────
 
@@ -20,6 +19,7 @@
       hl.bind(mod .. " + W",      hl.dsp.exec_cmd(browser),         { description = "Launch browser" })
       hl.bind(mod .. " + E",      hl.dsp.exec_cmd(fileManager),     { description = "Launch file manager" })
       hl.bind(mod .. " + B",      hl.dsp.exec_cmd("blueman-manager"), { description = "Launch bluetooth manager" })
+      hl.bind(mod .. " + F1",     hl.dsp.exec_cmd(keybindHelp),          { description = "Show keybind help" })
 
       -- ── Window management ─────────────────────────────────────────────────────
       hl.bind(mod .. " + Q", hl.dsp.exec_cmd("~/.dotfiles/scripts/hypr/kill.sh"),                  { description = "Kill active window" })
@@ -70,10 +70,6 @@
       hl.bind(mod .. " + minus", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),    { locked = true })
       hl.bind(mod .. " + M",     hl.dsp.exec_cmd("wpctl set-mute   @DEFAULT_AUDIO_SINK@ toggle"), { locked = true })
 
-      -- ── Audio-output switcher ─────────────────────────────────────────────────
-      hl.bind(mod .. " + A",      hl.dsp.exec_cmd("wpctl set-default $(wpctl status | awk '/AirPods Pro/{print $2}' | tr -d '.')"))
-      hl.bind(modShift .. " + A", hl.dsp.exec_cmd("wpctl set-default $(wpctl status | awk '/Built-in Audio Analog/{print $2}' | tr -d '.' | head -1)"))
-
       hl.bind(mod ..      " + G", hl.dsp.exec_cmd("~/.dotfiles/scripts/guitar.sh"))
       hl.bind(modShift .. " + G", hl.dsp.exec_cmd("~/.dotfiles/scripts/unguitar.sh"))
 
@@ -112,5 +108,30 @@
       -- Knob Up / Down
       hl.bind("XF86Launch9", hl.dsp.exec_cmd("~/.dotfiles/scripts/minikb.sh up"))
       hl.bind("F19",         hl.dsp.exec_cmd("~/.dotfiles/scripts/minikb.sh down"))
+  '';
+
+  xdg.configFile."hypr/keybindings.md".text = ''
+    # Keybindings
+
+    ## Launch
+    `Super + Return` terminal · `Super + Space` launcher · `Super + W` browser
+    `Super + E` files · `Super + B` Bluetooth · `Super + F1` this help
+
+    ## Windows
+    `Super + Q` close · `Super + F` fullscreen · `Super + V` floating
+    `Super + H/J/K/L` or arrow keys focus · `Super + Shift + arrows` move
+    `Super + Ctrl + H/J/K/L` or arrows resize
+
+    ## Workspaces
+    `Super + 1–0` switch workspace · `Super + Shift + 1–0` move window
+    Workspace 1: web & chat · 3: audio · 4: code & games
+
+    ## Capture and media
+    `Print` copy monitor · `Super + Print` copy selection · `Super + Shift + Print` save selection
+    `Super + ,/.//` previous/next/play-pause · `Super + -/=/M` volume down/up/mute
+    Hardware media and volume keys also work.
+
+    ## Music
+    `Super + G` guitar mode · `Super + Shift + G` leave guitar mode
   '';
 }
