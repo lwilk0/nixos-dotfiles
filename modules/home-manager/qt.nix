@@ -1,4 +1,4 @@
-{ ... }: {
+{...}: {
   xdg.configFile."Kvantum/Aesthetic-Night".source =
     ../../home-manager/themes/aesthetic-night/kvantum/Aesthetic-Night;
 

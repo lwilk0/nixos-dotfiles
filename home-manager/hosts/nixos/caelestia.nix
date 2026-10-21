@@ -1,5 +1,4 @@
-
-{ ... }: {
+{...}: {
   programs.caelestia.settings = {
     services = {
       sensorUnits = "Celsius";
@@ -26,4 +25,3 @@
     };
   };
 }
-

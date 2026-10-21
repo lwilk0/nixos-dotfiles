@@ -1,6 +1,5 @@
 {
   inputs,
-  lib,
   pkgs,
   pkgs-unstable,
   ...
@@ -10,7 +9,7 @@
     cat ~/.local/state/caelestia/sequences.txt 2> /dev/null
     exec ${pkgs.yazi}/bin/yazi "$@"
   '';
-in {  
+in {
   home.packages = with pkgs; [
     yazi-themed
     caelestia-cli
@@ -52,5 +51,5 @@ in {
     alejandra
     prettierd
     pkgs-unstable.rustc
-  ]; 
+  ];
 }

@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   # 1. Install the Wayland-specific wrapper of LibreWolf
   environment.systemPackages = with pkgs; [
     librewolf

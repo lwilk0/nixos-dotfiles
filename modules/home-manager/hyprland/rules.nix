@@ -30,7 +30,7 @@
       workspace = "4",
     })
 
-    
+
     hl.window_rule({
       name = "kitty-default",
       match = { class = "kitty" },

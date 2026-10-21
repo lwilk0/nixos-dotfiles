@@ -44,11 +44,10 @@
 
     nixvim = {
       url = "github:nix-community/nixvim/nixos-26.05";
-    }; 
+    };
   };
 
   outputs = {
-    self,
     nixpkgs,
     nixpkgs-unstable,
     home-manager,

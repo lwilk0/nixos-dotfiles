@@ -1,6 +1,4 @@
 {...}: {
-  # Hardware and display choices for the current host.  Keep reusable
-  # Hyprland settings in modules/home-manager/hyprland instead.
   dotfiles.hyprland = {
     monitorsLua = ''
       hl.monitor({

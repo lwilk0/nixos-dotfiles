@@ -79,12 +79,11 @@
   nix.settings.auto-optimise-store = true;
   nix.optimise = {
     automatic = true;
-    dates = [ "weekly" ];
+    dates = ["weekly"];
   };
 
-  fileSystems."/".options = lib.mkForce [ "noatime" ];
+  fileSystems."/".options = lib.mkForce ["noatime"];
   services.fstrim.enable = true;
- 
 
   services.printing.enable = false;
   services.openssh.enable = false;
