@@ -36,6 +36,7 @@ in {
       btop
       discord
       vscodium
+      heroic
       nerd-fonts.jetbrains-mono
       xdg-utils
       gnome-keyring

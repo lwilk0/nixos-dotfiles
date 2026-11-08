@@ -19,11 +19,11 @@
 
     # Hyprland
     hyprland = {
-      url = "github:hyprwm/Hyprland/v0.56.2";
+      url = "github:hyprwm/Hyprland/v0.57.1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     xdg-portal-hyprland = {
-      url = "github:hyprwm/xdg-desktop-portal-hyprland/v1.4.1";
+      url = "github:hyprwm/xdg-desktop-portal-hyprland/v1.5.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
