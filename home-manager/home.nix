@@ -79,6 +79,7 @@ in {
       cdrdao
       dvdplusrwtools
       tuxguitar
+      gimp-with-plugins
 
       wineWow64Packages.yabridge
       winetricks
