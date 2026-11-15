@@ -78,6 +78,7 @@ in {
       codex
       cdrdao
       dvdplusrwtools
+      tuxguitar
 
       wineWow64Packages.yabridge
       winetricks
