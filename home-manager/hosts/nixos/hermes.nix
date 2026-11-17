@@ -3,9 +3,21 @@
   inputs,
   lib,
   pkgs,
+  config,
   ...
 }: let
   system = pkgs.stdenv.hostPlatform.system;
+
+  signalCli = pkgs-unstable.signal-cli;
+
+  signalEnv = "${config.home.homeDirectory}/.config/hermes-agent/signal.env";
+
+  signalDaemon = pkgs.writeShellScript "signal-cli-daemon" ''
+    exec ${signalCli}/bin/signal-cli \
+      --account "$SIGNAL_ACCOUNT" \
+      daemon --http 127.0.0.1:8080
+  '';
+
   stockPatchelf = pkgs.patchelf;
 
   hermesPmPackages =
@@ -27,14 +39,53 @@
     pmPackages = hermesPmPackages;
   };
 in {
-  services.hermes-agent.package = hermesPackage;
-
   programs.hermes-agent = {
     enable = true;
     desktop.enable = true;
   };
 
+  services.hermes-agent = {
+    enable = true;
+    package = hermesPackage;
+
+    gateway.enable = true;
+
+    settings = {
+      model = {
+        provider = "llamacpp";
+        default = "Qwen3.8-27B-UD-Q6_K";
+      };
+
+      local_runtime = {
+        enabled = true;
+        backend = "auto";
+      };
+    };
+
+    environmentFiles = [
+      signalEnv
+    ];
+  };
+
   home.packages = [
-    pkgs-unstable.signal-cli
+    signalCli
   ];
+
+  systemd.user.services.signal-cli = {
+    Unit = {
+      Description = "Signal CLI HTTP daemon for Hermes";
+      After = ["network.target"];
+    };
+
+    Service = {
+      EnvironmentFile = signalEnv;
+      ExecStart = "${signalDaemon}";
+
+      Restart = "on-failure";
+      RestartSec = "5s";
+      UMask = "0077";
+    };
+
+    Install.WantedBy = ["default.target"];
+  };
 }
