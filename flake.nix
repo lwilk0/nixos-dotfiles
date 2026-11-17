@@ -6,6 +6,11 @@
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
     nixpkgs.url = "nixpkgs/nixos-26.05";
 
+    hermes-agent = {
+      url = "github:NousResearch/hermes-agent";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     musnix = {
       url = "github:musnix/musnix/a84602f";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -56,6 +61,7 @@
     caelestia-shell,
     chaotic,
     nixvim,
+    hermes-agent,
     ...
   } @ inputs: let
     lib = nixpkgs.lib;
@@ -79,6 +85,7 @@
           hostModule
           caelestia-shell.homeManagerModules.default
           nixvim.homeModules.nixvim
+          hermes-agent.homeManagerModules.default
         ];
       };
   in {
