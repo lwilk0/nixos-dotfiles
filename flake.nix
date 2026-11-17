@@ -99,9 +99,7 @@
           {programs.appimage.binfmt = true;}
         ];
       };
-    };
 
-    nixosConfigurations = {
       nixos-laptop = lib.nixosSystem {
         inherit pkgs;
         specialArgs = {
