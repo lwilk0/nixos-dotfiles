@@ -162,17 +162,5 @@ in {
     settings = {
       experimental-features = ["nix-command" "flakes"];
     };
-  };
-
-  /*
-  services.dotfilesAutosync = {
-    enable = true;
-    branch = "auto-sync";
-    remote = "origin";
-    interval = "2h";
-    startBootSec = "5min";
-    authorName  = "dotfiles-autosync";
-    authorEmail = "autosync@wilko.local";
-  };
-  */
+  }; 
 }
