@@ -53,12 +53,19 @@ in {
     settings = {
       model = {
         provider = "llamacpp";
-        default = "Qwen3.8-27B-UD-Q6_K";
+        default = "Qwen3.8-27B-UD-Q4_K_M";
       };
 
       local_runtime = {
         enabled = true;
-        backend = "auto";
+        backend = "vulkan";
+      };
+
+      model_aliases = {
+        qwen-local = {
+          model = "Qwen3.8-27B-UD-Q4_K_M";
+          provider = "llamacpp";
+        };
       };
     };
 
