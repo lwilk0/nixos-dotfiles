@@ -80,13 +80,10 @@ in {
       dvdplusrwtools
       tuxguitar
       gimp-with-plugins
-
       wineWow64Packages.yabridge
       winetricks
-
       gcc
       tree-sitter
-
       qjackctl
       carla
       alsa-utils
@@ -118,7 +115,6 @@ in {
       fontconfig
       libpng
       zlib
-
       rust-analyzer
       cargo
       rustfmt
