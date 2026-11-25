@@ -130,6 +130,9 @@ in {
       shfmt
       alejandra
       prettierd
+      python312Full
+      python312Packages.pip 
+      stdenv.cc.cc.lib     
     ]
     ++ [
       pkgs-unstable.rustc
